@@ -1,0 +1,195 @@
+{
+  "$schema": "Open Data RDW: Gekentekende_voertuigen",
+  "type": "object",
+  "properties": {
+    "Kentenken": {
+      "type": "string"
+    },
+    "Voertuigsoort": {
+      "type": "string"
+    },
+    "Merk": {
+      "type": "string"
+    },
+    "Handelsbenaming": {
+      "type": "string"
+    },
+    "Vervaldatum APK": {
+      "type": "integer"
+    },
+    "Datum tentaamstelling": {
+      "type": "integer"
+    },
+    "Bruto BPM": {
+      "type": "integer"
+    },
+    "Inrichting": {
+      "type": "string"
+    },
+    "Aantal zitplaatsen": {
+      "type": "integer"
+    },
+    "Eerste kleur": {
+      "type": "string"
+    },
+    "Tweede kleur": {
+      "type": "string"
+    },
+    "Aantal cilinders": {
+      "type": "integer"
+    },
+    "Cilinderinhoud": {
+      "type": "integer"
+    },
+    "Massa ledig voertuig": {
+      "type": "integer"
+    },
+    "Toegestane maximum massa voertuig": {
+      "type": "integer"
+    },
+    "Massa rijklaar": {
+      "type": "indicator"
+    },
+    "Maximum massa trekken ongeremd": {
+      "type": "integer"
+    },
+    "Maximum massa trekken geremd": {
+      "type": "integer"
+    },
+    "Zuinigheidslabel": {
+      "type": "string"
+    },
+    "Datum eerste toelating": {
+      "type": "integer"
+    },
+    "Datum eerste afgifte Nederland": {
+      "type": "integer"
+    },
+    "Wacht op keuren": {
+      "type": "string"
+    },
+    "Catalogusprijs": {
+      "type": "integer"
+    },
+    "WAM verzekerd": {
+      "type": "string"
+    },
+    "Maximale constuctiesnelheid (brom/snorfiets)": {
+      "type": "string"
+    },
+    "Laadvermogen": {
+      "type": "integer"
+    },
+    "Oplegger geremd": {
+      "type": "integer"
+    },
+    "Aanhanger autonoom geremd": {
+      "type": "integer"
+    },
+    "Aanhanger middenas geremd": {
+      "type": "integer"
+    },
+    "Vermogen (brom/snorfiets)": {
+      "type": "integer"
+    },
+    "Aantal staanplaatsen": {
+      "type": "integer"
+    },
+    "Aantal deuren": {
+      "type": "integer"
+    },
+    "Aantal wielen": {
+      "type": "integer"
+    },
+    "Afstand hart koppeling tot achterzijden voertuig": {
+      "type": "integer"
+    },
+    "Afstand voorzijde voertuig tot hart koppeling": {
+      "type": "integer"
+    },
+    "Afwijkende maximum snelheid": {
+      "type": "integer"
+    },
+    "Lengte": {
+      "type": "integer"
+    },
+    "Breedte": {
+      "type": "integer"
+    },
+    "Europese voertuigcategorie": {
+      "type": "string"
+    },
+    "Europese voertuigcategorie toevoeging": {
+      "type": "string"
+    },
+    "Plaats chassisnummer": {
+      "type": "string"
+    },
+    "Technische max. masse voertuig": {
+      "type": "integer"
+    },
+    "Type": {
+      "type": "string"
+    },
+    "Type gasinstalatie": {
+      "type": "string"
+    },
+    "Typegoedkeuringnummer": {
+      "type": "string"
+    },
+    "Variant": {
+      "type": "string"
+    },
+    "Uitvoering": {
+      "type": "string"
+    },
+    "Volgnummer wijziging EU typegoedkeuring": {
+      "type": "integer"
+    },
+    "Vermogen massarijklaar": {
+      "type": "integer"
+    },
+    "Wielbasis": {
+      "type": "integer"
+    },
+    "Export indicator": {
+      "type": "boolean"
+    },
+    "Openstaande terugroepactie indicator": {
+      "type": "boolean"
+    },
+    "Valvaldatum tachograaf": {
+      "type": "integer"
+    },
+    "Taxi indicator": {
+      "type": "boolean"
+    },
+    "Maximum massa samenstelling": {
+      "type": "integer"
+    },
+    "Aantal rolstoelplaatsen": {
+      "type": "integer"
+    },
+    "Maximum ondersteunde snelheid": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "Kentenken",
+    "Voertuigsoort",
+    "Merk",
+    "Handelsbenaming",
+    "Datum tentaamstelling",
+    "Inrichting",
+    "Eerste kleur",
+    "Tweede kleur",
+    "Datum eerste toelating",
+    "Datum eerste afgifte Nederland",
+    "Wacht op keuren",
+    "WAM verzekerd",
+    "Europese voertuigcategorie",
+    "Export indicator",
+    "Openstaande terugroepactie indicator",
+    "Taxi indicator",
+  ]
+}
