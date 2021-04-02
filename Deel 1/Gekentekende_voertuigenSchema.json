@@ -5,6 +5,90 @@
     "Kentenken": {
       "type": "string"
     },
+    "Brandstof": {
+    	"type": "object",
+    	"properties": {
+    		"Brandstof volgnummer": {
+    			"type": "integer"
+    		},
+    		"Brondstof omschrijving": {
+    			"type": "string"
+    		},
+    		"Brandstofverbruik buiten de stad": {
+    			"type": "number"
+    		},
+    		"Brandstofverbruik gecombineerd": {
+    			"type": "number"
+    		},
+    		"Brandstofverbruik stad": {
+    			"type": "number"
+    		},
+    		"CO2 uitstoot gecombineerd": {
+    			"type": "integer"
+    		},
+    		"Geluidsniveau rijdend": {
+    			"type": "integer"
+    		},
+    		"Geluidsniveau stationair": {
+    			"type": "integer"
+    		},
+    		"Emissieklasse": {
+    			"type": "integer"
+    		},
+    		"Milliueklasse EG Goedkeuring(licht)": {
+    			"type": "string"
+    		},
+    		"Milliueklasse EG Goedkeuring(zwaar)": {
+    			"type:": "string"
+    		},
+    		"Uitstoot deeltjes(licht)": {
+    			"type": "number"
+    		},
+    		"Nettomaximumvermogen": {
+    			"type": "number"
+    		},
+    		"Roetuitstoot": {
+    			"type": "number"
+    		},
+    		"Toerental eluidsniveau": {
+    			"type": "integer"
+    		}
+    	},
+    	"required": [
+    		"Brandstof volgnummer",
+    		"Brandstof omschrijving",
+    		"Nettomaximumvermogen"
+    	]
+    },
+    "Assen": {
+      "As nummer": {
+        "type": "integer"
+      },
+      "Aantal assen": {
+        "type": "integer"
+      },
+      "Aangedreven as": {
+        "type": "boolean"
+      },
+      "Hefas": {
+        "type": "string"
+      },
+      "Plaatscode as": {
+        "type": "string"
+      },
+      "Spoorbreedte": {
+        "type": "integer"
+      },
+      "Weggedrag code": {
+        "type": "string"
+      },
+      "Wettelijk Toegestane maximum aslast": {
+        "type": "integer"
+      },
+      "Technisch Toegestane maximum aslast": {
+        "type": "integer"
+      }
+    },
     "Voertuigsoort": {
       "type": "string"
     },
@@ -190,6 +274,6 @@
     "Europese voertuigcategorie",
     "Export indicator",
     "Openstaande terugroepactie indicator",
-    "Taxi indicator",
+    "Taxi indicator"
   ]
 }
