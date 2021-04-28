@@ -42,7 +42,7 @@ class voertuigenController extends Controller
         $json = array();//Ik maak vast een lege array aan, waar ik straks alles inpleur
         $kenCSV = fopen($this->krijgCSV('voertuigen'), "r");//Haal het bestand op
         while (($kenArr = fgetcsv($kenCSV, 3000,",")) !== FALSE)//Loop door het hele bestand heen
-        {  
+        {
             //Brandstof ophalen
             $braCSV = fopen($this->krijgCSV('brandstof'), "r");
             $braArr = array();//Deze array is speciaal gemaakt voor de brandstof
@@ -81,7 +81,7 @@ class voertuigenController extends Controller
             {
                 if ($assArr[0] == $kenArr[0])
                 {
-                    $assJson = 
+                    $assJson =
                     [
                         "As nummer" => $assArr[1],
                         "Aantal assen" => $assArr[2],
@@ -173,18 +173,18 @@ class voertuigenController extends Controller
         $kenCSV = fopen($this->krijgCSV('voertuigen'), "r");
         while (($kenArr = fgetcsv($kenCSV, 3000,",")) !== FALSE)
         {
-            
+
             if ($kenArr[0] == $kenteken)//Deze funtie werkt hetzelfde als 'showAlleVoertuigen' alleen zit deze check erbij. Zo gaat hij alleen verder wanneer het gevonden kenteken overeenkomt met de kenteken uit de request. Deze functie is ook veel sneller omdat hij maar een keer naar brandstof en assen hoeft te zoeken i.p.v. bij ieder voertuig.
             {
                 //Brandstof ophalen
                 $braCSV = fopen($this->krijgCSV('brandstof'), "r");
                 $braJson = "";
                 while (($braArr = fgetcsv($braCSV, 3000,",")) !== FALSE)
-                {  
+                {
                     $Json = "";
                     if ($braArr[0] == $kenteken)
                     {
-                        $braJson = 
+                        $braJson =
                         [
                             "Brandstof volgnummer" => $braArr[1],
                             "Brondstof omschrijving" => $braArr[2],
@@ -215,7 +215,7 @@ class voertuigenController extends Controller
                 {
                     if ($assArr[0] == $kenteken)
                     {
-                        $assJson = 
+                        $assJson =
                         [
                             "As nummer" => $assArr[1],
                             "Aantal assen" => $assArr[2],
@@ -301,7 +301,7 @@ class voertuigenController extends Controller
         }
         fclose($kenCSV);
     }
-    
+
     public function maak(Request $request)
     {
         //Ik haal hier een json op uit de request, die data schrijf ik vervolgns in de CSVs. Ik lees de json uit op key, de volgorde maakt dus niet uit waarin de json is opgestled.
@@ -455,7 +455,7 @@ class voertuigenController extends Controller
         }
 
         //Brandstof deleten         //Dit werkt verder hetzelfde als het bij het algemene CSV, alleen nu in het CSV van de brandstof
-        $array = [];       
+        $array = [];
         $file = fopen($this->krijgCSV('brandstof'), 'r');
         while (($lijn = fgetcsv($file, 3000,",")) !== FALSE)
         {
@@ -481,7 +481,7 @@ class voertuigenController extends Controller
         }
 
         //Assen deleten         //Dit werkt verder hetzelfde als het bij het algemene CSV, alleen nu in het CSV van de assen
-        $array = [];       
+        $array = [];
         $file = fopen($this->krijgCSV('assen'), 'r');
         while (($lijn = fgetcsv($file, 3000,",")) !== FALSE)
         {
@@ -515,13 +515,14 @@ class voertuigenController extends Controller
         $jsonArray = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
 
         //Voertuigen updaten
-        $voertuigenArray = [];       
+        $voertuigenArray = [];
         $file = fopen($this->krijgCSV('voertuigen'), 'r');
         while (($lijn = fgetcsv($file, 3000,",")) !== FALSE)
         {
             array_push($voertuigenArray, $lijn);
         }
         fclose($file);
+        print_r($voertuigenArray);
         $i=0;
         foreach ($voertuigenArray as &$waarde)
         {
@@ -551,7 +552,7 @@ class voertuigenController extends Controller
         //Brandstof updaten
         if (array_key_exists('Brandstof', $jsonArray))//Als er een key 'brandstof' is meegestuurd, willen we blijkbaar de bradstof updaten. Als dit niet het geval is, hoeven we niks up te daten.
         {
-            $brandstofArray = [];       
+            $brandstofArray = [];
             $file = fopen($this->krijgCSV('brandstof'), 'r');
             while (($lijn = fgetcsv($file, 3000,",")) !== FALSE)
             {
@@ -588,7 +589,7 @@ class voertuigenController extends Controller
         //Assen updaten
         if (array_key_exists('Assen', $jsonArray))//Als er een key 'brandstof' is meegestuurd, willen we blijkbaar de bradstof updaten. Als dit niet het geval is, hoeven we niks up te daten.
         {
-            $assenArray = [];       
+            $assenArray = [];
             $file = fopen($this->krijgCSV('assen'), 'r');
             while (($lijn = fgetcsv($file, 3000,",")) !== FALSE)
             {
@@ -620,6 +621,187 @@ class voertuigenController extends Controller
                 }
                 $i++;
             }
+        }
+    }
+
+    public function showAllevoertuigenAssen($kenteken = null)
+    {
+        ini_set('max_execution_time', 3000); // Ik zet de maximale executietijd op 15 min. De stock 2 min. zijn te kort om het hele bestand door de lezen.
+        $i = 0;//Hiermee hou ik de counter bij
+        $json = array();//Ik maak vast een lege array aan, waar ik straks alles inpleur
+        $kenCSV = fopen($this->krijgCSV('assen'), "r");//Haal het bestand op
+        while (($assArr = fgetcsv($kenCSV, 3000,",")) !== FALSE)//Loop door het hele bestand heen
+        {
+            if (isset($kenteken))
+            {
+                if ($assArr[0] == $kenteken)
+                {
+                    $json[$i] = //Dit is de algemene json. Hierin stop ik alle gevonden waarden het het voertuigenbestand. Tevens stop ik $braJson en $assJson erook bij zodat alles in dezelde json komt
+                        [
+                            "Kenteken" => $kenteken,
+                            "As nummer" => $assArr[1],
+                            "Aantal assen" => $assArr[2],
+                            "Aangedreven as" => $assArr[3],
+                            "Hefas" => $assArr[4],
+                            "Plaatscode as" => $assArr[5],
+                            "Spoorbreedte" => $assArr[6],
+                            "Weggedrag code" => $assArr[7],
+                            "Wettelijk Toegestane maximum aslast" => $assArr[8],
+                            "Technisch Toegestane maximum aslast" => $assArr[9]
+                        ];
+                    $i++;
+                }
+            }
+            else
+            {
+                $json[$i] = //Dit is de algemene json. Hierin stop ik alle gevonden waarden het het voertuigenbestand. Tevens stop ik $braJson en $assJson erook bij zodat alles in dezelde json komt
+                    [
+                        "Kenteken" => $assArr[0],
+                        "As nummer" => $assArr[1],
+                        "Aantal assen" => $assArr[2],
+                        "Aangedreven as" => $assArr[3],
+                        "Hefas" => $assArr[4],
+                        "Plaatscode as" => $assArr[5],
+                        "Spoorbreedte" => $assArr[6],
+                        "Weggedrag code" => $assArr[7],
+                        "Wettelijk Toegestane maximum aslast" => $assArr[8],
+                        "Technisch Toegestane maximum aslast" => $assArr[9]
+                    ];
+                $i++;
+            }
+        }
+        return response()->json($json);//Return de array en maak er een json van
+        fclose($kenCSV);;
+    }
+
+    public function maakAssen(Request $request)
+    {
+        //Ik haal hier een json op uit de request, die data schrijf ik vervolgns in de CSVs. Ik lees de json uit op key, de volgorde maakt dus niet uit waarin de json is opgestled.
+        $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
+
+        $array = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
+
+        $assArr[0] = $array['Kenteken'];
+        $assArr[1] = $array['As nummer'];
+        $assArr[2] = $array['Aantal assen'];
+        $assArr[3] = $array['Aangedreven as'];
+        $assArr[4] = $array['Hefas'];
+        $assArr[5] = $array['Plaatscode as'];
+        $assArr[6] = $array['Spoorbreedte'];
+        $assArr[7] = $array['Weggedrag code'];
+        $assArr[8] = $array['Wettelijk Toegestane maximum aslast'];
+        $assArr[9] = $array['Technisch Toegestane maximum aslast'];
+
+        $file = fopen($this->krijgCSV('assen'), 'a');
+        fputcsv($file, $assArr);
+        fclose($file);
+    }
+
+    public function deleteAssen($kenteken)
+    {
+        //Assen deleten         //Dit werkt verder hetzelfde als het bij het algemene CSV, alleen nu in het CSV van de assen
+        $array = [];
+        $file = fopen($this->krijgCSV('assen'), 'r');
+        while (($lijn = fgetcsv($file, 3000,",")) !== FALSE)
+        {
+            array_push($array, $lijn);
+        }
+        fclose($file);
+        $k=0;
+        foreach ($array as &$waarde)
+        {
+            if ($waarde[0] === $kenteken)
+            {
+                unset($array[$k]);
+                array_values($array);
+                $file = fopen($this->krijgCSV('assen'), 'w');
+                foreach ($array as $line)
+                {
+                    fputcsv($file, $line);
+                }
+                fclose($file);
+                break;
+            }
+            $k++;
+        }
+    }
+
+    public function updateAssen(Request $request, $kenteken)
+    {
+        //Deze functie is nogal ingewikkeld, het is in feite een combi tussen 'maak' en 'delete'
+        $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
+
+        $jsonArray = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
+
+
+        //Voertuigen updaten
+        $voertuigenArray = [];
+        $file = fopen($this->krijgCSV('voertuigen'), 'r');
+        while (($lijn = fgetcsv($file, 3000,",")) !== FALSE)
+        {
+            array_push($voertuigenArray, $lijn);
+        }
+        fclose($file);
+        $i=0;
+        foreach ($voertuigenArray as &$waarde)
+        {
+            if ($waarde[0] === $kenteken)
+            {
+                foreach ($jsonArray as $jsonKey => $jsonValue)
+                {
+                    foreach ($voertuigenArray[$i] as $voertuigKey => $voertuigValue)
+                    {
+                        if ($jsonKey == $voertuigenArray[0][$voertuigKey])
+                        {
+                            $voertuigenArray[$i][$voertuigKey] = $jsonValue;
+                        }
+                    }
+                }
+                $file = fopen($this->krijgCSV('voertuigen'), 'w');
+                foreach ($voertuigenArray as $line)
+                {
+                    fputcsv($file, $line);
+                }
+                fclose($file);
+                break;
+            }
+            $i++;
+        }
+
+        //Assen updaten
+
+        $assenArray = [];
+        $file = fopen($this->krijgCSV('assen'), 'r');
+        while (($lijn = fgetcsv($file, 3000,",")) !== FALSE)
+        {
+            array_push($assenArray, $lijn);
+        }
+        fclose($file);
+        //print_r($assenArray);
+        $i=0;
+        foreach ($assenArray as $voertuig)
+        {
+            if ($voertuig[0] === $kenteken)
+            {
+              foreach ($jsonArray as $jsonKey => $jsonValue)
+                {
+                    foreach ($assenArray[0] as $voertuigKey => $voertuigValue)
+                    {
+                        if ($jsonKey == $voertuigValue)
+                        {
+                            $assenArray[$i][$voertuigKey] = $jsonValue;
+                        }
+                    }
+                }
+                $file = fopen($this->krijgCSV('assen'), 'w');
+                foreach ($assenArray as $line)
+                {
+                    fputcsv($file, $line);
+                }
+                fclose($file);
+                break;
+            }
+            $i++;
         }
     }
 }
