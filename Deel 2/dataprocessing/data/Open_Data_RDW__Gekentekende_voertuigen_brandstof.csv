@@ -1,5 +1,4 @@
 Kenteken,"Brandstof volgnummer","Brandstof omschrijving","Brandstofverbruik buiten de stad","Brandstofverbruik gecombineerd","Brandstofverbruik stad","CO2 uitstoot gecombineerd","CO2 uitstoot gewogen","Geluidsniveau rijdend","Geluidsniveau stationair",Emissieklasse,"Milieuklasse EG Goedkeuring (licht)","Milieuklasse EG Goedkeuring (zwaar)","Uitstoot deeltjes (licht)","Uitstoot deeltjes (zwaar)",Nettomaximumvermogen,"Nominaal continu maximumvermogen",Roetuitstoot,"Toerental geluidsniveau","Emissie deeltjes type1 wltp","Emissie co2 gecombineerd wltp","Emissie co2 gewogen gecombineerd wltp","Brandstof verbruik gecombineerd wltp","Brandstof verbruik gewogen gecombineerd wltp","Elektrisch verbruik enkel elektrisch wltp","Actie radius enkel elektrisch wltp","Actie radius enkel elektrisch stad wltp","Elektrisch verbruik extern opladen wltp","Actie radius extern opladen wltp","Actie radius extern opladen stad wltp","Max vermogen 15 minuten","Max vermogen 60 minuten","Netto max vermogen elektrisch","Klasse hybride elektrisch voertuig"
-VFZ09K,1,Diesel,7.40,7.30,7.10,191,,74,84,6,,595/2009*2018/932D,,,120.00,,0.51,2625,,,,,,,,,,,,,,,
 25MLST,1,Benzine,,,,,,72,90,,134/2014*2018/295A1,,,,35.00,,,4000,,,,,,,,,,,,,,,
 H655LS,1,Benzine,4.80,6.30,9.10,150,,72,77,4,70/220*2003/76B,,,,55.00,,,3750,,,,,,,,,,,,,,,
 VDN70V,1,Benzine,,,,,,,,5,,,,,272.00,,,,,,,,,,,,,,,,,,
@@ -9997,3 +9996,4 @@ G524KZ,1,Benzine,4.20,4.80,6.00,109,,70,75,6,715/2007*2018/1832DG,,,,62.50,,,375
 ZN704Z,1,Benzine,4.20,4.70,5.60,108,,69,75,6,715/2007*2017/1347AG,,,,61.00,,,3750,,128,,5.70,,,,,,,,,,,
 VBS48K,1,Diesel,4.90,5.10,5.60,135,,68,82,6,715/2007*2018/1832BI,,,,75.00,,0.51,2625,1.06,182,,6.90,,,,,,,,,,,
 H223RS,1,Benzine,4.10,4.60,5.50,106,,70,77,6,715/2007*2018/1832DG,,,,49.30,,,3750,0.00,121,,5.40,,,,,,,,,,,5,2,Benzine,5.40,6.70,8.90,159,,72,76,4,70/220*2003/76B,,,,85.00,,,3750
+60,3,Benzine,,,,,,72,90,,134/2014*2018/295A1,,,,35.00,,,4000

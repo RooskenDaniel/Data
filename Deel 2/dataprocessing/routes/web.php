@@ -29,3 +29,9 @@ $router->get('/assen/{kenteken}', 'voertuigenController@showAllevoertuigenAssen'
 $router->post('/assen', 'voertuigenController@maakAssen');
 $router->delete('/assen/{kenteken}', 'voertuigenController@deleteAssen');
 $router->put('/assen/{kenteken}', 'voertuigenController@updateAssen');
+
+$router->get('/brandstof', 'voertuigenController@showAllevoertuigenBrandstof');
+$router->get('/brandstof/{kenteken}', 'voertuigenController@showAllevoertuigenBrandstof');
+$router->post('/brandstof', 'voertuigenController@maakBrandstof');
+$router->delete('/brandstof/{kenteken}', 'voertuigenController@deleteBrandstof');
+$router->put('/brandstof/{kenteken}', 'voertuigenController@updateBrandstof');
