@@ -18,20 +18,36 @@ $router->get('/', function () use ($router)
     echo 'Welkom bij mijn api';
 });
 
-$router->get('/voertuigen', 'voertuigenController@showAllevoertuigen');
-$router->get('/voertuigen/{kenteken}', 'voertuigenController@showEenvoertuig');
-$router->post('/voertuigen', 'voertuigenController@maak');
+$router->get('json/voertuigen', 'voertuigenController@showAllevoertuigenJson');
+$router->get('json/voertuigen/{kenteken}', 'voertuigenController@showEenvoertuigJson');
+$router->post('json/voertuigen', 'voertuigenController@maakJson');
 $router->delete('/voertuigen/{kenteken}', 'voertuigenController@delete');
-$router->put('/voertuigen/{kenteken}', 'voertuigenController@update');
+$router->put('json/voertuigen/{kenteken}', 'voertuigenController@updateJson');
 
-$router->get('/assen', 'voertuigenController@showAllevoertuigenAssen');
-$router->get('/assen/{kenteken}', 'voertuigenController@showAllevoertuigenAssen');
-$router->post('/assen', 'voertuigenController@maakAssen');
+$router->get('json/assen', 'voertuigenController@showVoertuigenAssenJson');
+$router->get('json/assen/{kenteken}', 'voertuigenController@showVoertuigenAssenJson');
+$router->post('json/assen', 'voertuigenController@maakAssen');
 $router->delete('/assen/{kenteken}', 'voertuigenController@deleteAssen');
-$router->put('/assen/{kenteken}', 'voertuigenController@updateAssen');
+$router->put('json/assen/{kenteken}', 'voertuigenController@updateAssenJson');
 
-$router->get('/brandstof', 'voertuigenController@showAllevoertuigenBrandstof');
-$router->get('/brandstof/{kenteken}', 'voertuigenController@showAllevoertuigenBrandstof');
-$router->post('/brandstof', 'voertuigenController@maakBrandstof');
+$router->get('json/brandstof', 'voertuigenController@showVoertuigenBrandstofJson');
+$router->get('json/brandstof/{kenteken}', 'voertuigenController@showVoertuigenBrandstofJson');
+$router->post('json/brandstof', 'voertuigenController@maakBrandstofJson');
 $router->delete('/brandstof/{kenteken}', 'voertuigenController@deleteBrandstof');
-$router->put('/brandstof/{kenteken}', 'voertuigenController@updateBrandstof');
+$router->put('json/brandstof/{kenteken}', 'voertuigenController@updateBrandstof');
+
+
+$router->get('xml/voertuigen', 'voertuigenController@showAllevoertuigenXml');
+$router->get('xml/voertuigen/{kenteken}', 'voertuigenController@showEenvoertuigXml');
+$router->post('xml/voertuigen', 'voertuigenController@maakXml');
+$router->put('xml/voertuigen/{kenteken}', 'voertuigenController@update');
+
+$router->get('xml/assen', 'voertuigenController@showVoertuigenAssenXml');
+$router->get('xml/assen/{kenteken}', 'voertuigenController@showVoertuigenAssenXml');
+$router->post('xml/assen', 'voertuigenController@maakAssen');
+$router->put('xml/assen/{kenteken}', 'voertuigenController@updateAssenXml');
+
+$router->get('xml/brandstof', 'voertuigenController@showVoertuigenBrandstofXml');
+$router->get('xml/brandstof/{kenteken}', 'voertuigenController@showVoertuigenBrandstofXml');
+$router->post('xml/brandstof', 'voertuigenController@maakBrandstofXml');
+$router->put('xml/brandstof/{kenteken}', 'voertuigenController@updateBrandstof');

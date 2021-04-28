@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use SimpleXMLElement;
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
 
 class voertuigenController extends Controller
 {
@@ -35,75 +38,32 @@ class voertuigenController extends Controller
 
     }
 
-    public function showAllevoertuigen()
+
+
+    public function showAllevoertuigenJson()
     {
-        ini_set('max_execution_time', 3000); // Ik zet de maximale executietijd op 15 min. De stock 2 min. zijn te kort om het hele bestand door de lezen.
+        return response()->json($this->showAllevoertuigen());//Return de array en maak er een json van
+    }
+
+    public function showAllevoertuigenXML()
+    {
+        $xml_data = new SimpleXMLElement('<root/>');
+        $this->array_to_xml($this->showAllevoertuigen(), $xml_data);
+        print $xml_data->asXML();
+    }
+
+    public function showAllevoertuigen(): array
+    {
         $i = 0;//Hiermee hou ik de counter bij
         $json = array();//Ik maak vast een lege array aan, waar ik straks alles inpleur
         $kenCSV = fopen($this->krijgCSV('voertuigen'), "r");//Haal het bestand op
         while (($kenArr = fgetcsv($kenCSV, 3000,",")) !== FALSE)//Loop door het hele bestand heen
         {
-            //Brandstof ophalen
-            $braCSV = fopen($this->krijgCSV('brandstof'), "r");
-            $braArr = array();//Deze array is speciaal gemaakt voor de brandstof
-            while (($braArr = fgetcsv($braCSV, 3000,",")) !== FALSE)
-            {
-                if ($braArr[0] == $kenArr[0])//In zowel het algemene voertuigenbestand als het speciale brandstofbestand staat kenteken op nummer [0]. Als deze gelijk aan elkaar zijn, hebben we dus met hetzelfde voertuig te maken
-                {
-                    $braJson = //Ik stop alle gevonden gegeven hierin, later maak ik er een json van
-                    [
-                        "Brandstof volgnummer" => $braArr[1],
-                        "Brondstof omschrijving" => $braArr[2],
-                        "Brandstofverbruik buiten de stad" => $braArr[3],
-                        "Brandstofverbruik gecombineerd" => $braArr[4],
-                        "Brandstofverbruik stad" => $braArr[5],
-                        "CO2 uitstoot gecombineerd" => $braArr[6],
-                        "Geluidsniveau rijdend" => $braArr[8],
-                        "Geluidsniveau stationair" => $braArr[9],
-                        "Emissieklasse" => $braArr[10],
-                        "Milliueklasse EG Goedkeuring(licht)" => $braArr[11],
-                        "Milliueklasse EG Goedkeuring(zwaar)" => $braArr[12],
-                        "Uitstoot deeltjes(licht)" => $braArr[13],
-                        "Nettomaximumvermogen" => $braArr[15],
-                        "Roetuitstoot" => $braArr[17],
-                        "Toerental eluidsniveau" => $braArr[18]
-                    ];
-                    break;
-                }
-            }
-            fclose($braCSV);//Netjes afsluiten
-
-
-            //Assen ophalen     //Dit werkt behoorlijk hetzelfde als 'Brandstof ophalen'
-            $assCSV = fopen($this->krijgCSV('assen'), "r");
-            $assJson = "";
-            while (($assArr = fgetcsv($assCSV, 3000,",")) !== FALSE)
-            {
-                if ($assArr[0] == $kenArr[0])
-                {
-                    $assJson =
-                    [
-                        "As nummer" => $assArr[1],
-                        "Aantal assen" => $assArr[2],
-                        "Aangedreven as" => $assArr[3],
-                        "Hefas" => $assArr[4],
-                        "Plaatscode as" => $assArr[5],
-                        "Spoorbreedte" => $assArr[6],
-                        "Weggedrag code" => $assArr[7],
-                        "Wettelijk Toegestane maximum aslast" => $assArr[8],
-                        "Technisch Toegestane maximum aslast" => $assArr[9]
-                    ];
-                    break;
-                }
-            }
-            fclose($assCSV);
-
-
             $json[$i] = //Dit is de algemene json. Hierin stop ik alle gevonden waarden het het voertuigenbestand. Tevens stop ik $braJson en $assJson erook bij zodat alles in dezelde json komt
             [
                 "Kenteken" => $kenArr[0],
-                "Brandstof" => $braJson,
-                "Assen" => $assJson,
+                "Brandstof" => $this->showVoertuigenBrandstof($kenArr[0]),
+                "Assen" => $this->showVoertuigenAssen($kenArr[0]),
                 "Voertuigsoort" => $kenArr[1],
                 "Merk" => $kenArr[2],
                 "Handelsbenaming" => $kenArr[3],
@@ -148,23 +108,39 @@ class voertuigenController extends Controller
                 "Type" => $kenArr[43],
                 "Type gasinstalatie" => $kenArr[44],
                 "Typegoedkeuringnummer" => $kenArr[45],
-                "Variant" => $kenArr[46],
-                "Uitvoering" => $kenArr[47],
-                "Volgnummer wijziging EU typegoedkeuring" => $kenArr[48],
-                "Vermogen massarijklaar" => $kenArr[49],
-                "Wielbasis" => $kenArr[50],
-                "Export indicator" => $kenArr[51],
-                "Openstaande terugroepactie indicator" => $kenArr[52],
-                "Valvaldatum tachograaf" => $kenArr[53],
-                "Taxi indicator" => $kenArr[54],
-                "Maximum massa samenstelling" => $kenArr[55],
-                "Aantal rolstoelplaatsen" => $kenArr[56],
-                "Maximum ondersteunde snelheid" => $kenArr[57]
+                "Variant" => $kenArr[46] ?? null,
+                "Uitvoering" => $kenArr[47] ?? null,
+                "Volgnummer wijziging EU typegoedkeuring" => $kenArr[48] ?? null,
+                "Vermogen massarijklaar" => $kenArr[49] ?? null,
+                "Wielbasis" => $kenArr[50] ?? null,
+                "Export indicator" => $kenArr[51] ?? null,
+                "Openstaande terugroepactie indicator" => $kenArr[52] ?? null,
+                "Valvaldatum tachograaf" => $kenArr[53] ?? null,
+                "Taxi indicator" => $kenArr[54] ?? null,
+                "Maximum massa samenstelling" => $kenArr[55] ?? null,
+                "Aantal rolstoelplaatsen" => $kenArr[56] ?? null,
+                "Maximum ondersteunde snelheid" => $kenArr[57] ?? null
             ];
             $i++;
         }
-        return response()->json($json);//Return de array en maak er een json van
-        fclose($kenCSV);;
+        fclose($kenCSV);
+        return $json;
+    }
+
+
+
+    public function showEenvoertuigJson($kenteken)
+    {
+        $array = $this->showEenvoertuig($kenteken);
+        return response()->json($array);//Return de array en maak er een json van
+    }
+
+    public function showEenvoertuigXML($kenteken)
+    {
+        $xml_data = new SimpleXMLElement('<root/>');
+        $array = $this->showEenvoertuig($kenteken);
+        $this->array_to_xml($array, $xml_data);
+        print $xml_data->asXML();
     }
 
     public function showEenvoertuig($kenteken)
@@ -176,68 +152,11 @@ class voertuigenController extends Controller
 
             if ($kenArr[0] == $kenteken)//Deze funtie werkt hetzelfde als 'showAlleVoertuigen' alleen zit deze check erbij. Zo gaat hij alleen verder wanneer het gevonden kenteken overeenkomt met de kenteken uit de request. Deze functie is ook veel sneller omdat hij maar een keer naar brandstof en assen hoeft te zoeken i.p.v. bij ieder voertuig.
             {
-                //Brandstof ophalen
-                $braCSV = fopen($this->krijgCSV('brandstof'), "r");
-                $braJson = "";
-                while (($braArr = fgetcsv($braCSV, 3000,",")) !== FALSE)
-                {
-                    $Json = "";
-                    if ($braArr[0] == $kenteken)
-                    {
-                        $braJson =
-                        [
-                            "Brandstof volgnummer" => $braArr[1],
-                            "Brondstof omschrijving" => $braArr[2],
-                            "Brandstofverbruik buiten de stad" => $braArr[3],
-                            "Brandstofverbruik gecombineerd" => $braArr[4],
-                            "Brandstofverbruik stad" => $braArr[5],
-                            "CO2 uitstoot gecombineerd" => $braArr[6],
-                            "Geluidsniveau rijdend" => $braArr[8],
-                            "Geluidsniveau stationair" => $braArr[9],
-                            "Emissieklasse" => $braArr[10],
-                            "Milliueklasse EG Goedkeuring(licht)" => $braArr[11],
-                            "Milliueklasse EG Goedkeuring(zwaar)" => $braArr[12],
-                            "Uitstoot deeltjes(licht)" => $braArr[13],
-                            "Nettomaximumvermogen" => $braArr[15],
-                            "Roetuitstoot" => $braArr[17],
-                            "Toerental eluidsniveau" => $braArr[18]
-                        ];
-                        break;
-                    }
-                }
-                fclose($braCSV);
-
-
-                //Assen ophalen
-                $assCSV = fopen($this->krijgCSV('assen'), "r");
-                $assJson = "";
-                while (($assArr = fgetcsv($assCSV, 3000,",")) !== FALSE)
-                {
-                    if ($assArr[0] == $kenteken)
-                    {
-                        $assJson =
-                        [
-                            "As nummer" => $assArr[1],
-                            "Aantal assen" => $assArr[2],
-                            "Aangedreven as" => $assArr[3],
-                            "Hefas" => $assArr[4],
-                            "Plaatscode as" => $assArr[5],
-                            "Spoorbreedte" => $assArr[6],
-                            "Weggedrag code" => $assArr[7],
-                            "Wettelijk Toegestane maximum aslast" => $assArr[8],
-                            "Technisch Toegestane maximum aslast" => $assArr[9]
-                        ];
-                        break;
-                    }
-                }
-                fclose($assCSV);
-
-
-                $json =
+                $array =
                 [
                     "Kenteken" => $kenArr[0],
-                    "Brandstof" => $braJson,
-                    "Assen" => $assJson,
+                    "Brandstof" => $this->showVoertuigenBrandstof($kenArr[0]),
+                    "Assen" => $this->showVoertuigenAssen($kenArr[0]),
                     "Voertuigsoort" => $kenArr[1],
                     "Merk" => $kenArr[2],
                     "Handelsbenaming" => $kenArr[3],
@@ -282,102 +201,248 @@ class voertuigenController extends Controller
                     "Type" => $kenArr[43],
                     "Type gasinstalatie" => $kenArr[44],
                     "Typegoedkeuringnummer" => $kenArr[45],
-                    "Variant" => $kenArr[46],
-                    "Uitvoering" => $kenArr[47],
-                    "Volgnummer wijziging EU typegoedkeuring" => $kenArr[48],
-                    "Vermogen massarijklaar" => $kenArr[49],
-                    "Wielbasis" => $kenArr[50],
-                    "Export indicator" => $kenArr[51],
-                    "Openstaande terugroepactie indicator" => $kenArr[52],
-                    "Valvaldatum tachograaf" => $kenArr[53],
-                    "Taxi indicator" => $kenArr[54],
-                    "Maximum massa samenstelling" => $kenArr[55],
-                    "Aantal rolstoelplaatsen" => $kenArr[56],
-                    "Maximum ondersteunde snelheid" => $kenArr[57]
+                    "Variant" => $kenArr[46] ?? null,
+                    "Uitvoering" => $kenArr[47] ?? null,
+                    "Volgnummer wijziging EU typegoedkeuring" => $kenArr[48] ?? null,
+                    "Vermogen massarijklaar" => $kenArr[49] ?? null,
+                    "Wielbasis" => $kenArr[50] ?? null,
+                    "Export indicator" => $kenArr[51] ?? null,
+                    "Openstaande terugroepactie indicator" => $kenArr[52] ?? null,
+                    "Valvaldatum tachograaf" => $kenArr[53] ?? null,
+                    "Taxi indicator" => $kenArr[54] ?? null,
+                    "Maximum massa samenstelling" => $kenArr[55] ?? null,
+                    "Aantal rolstoelplaatsen" => $kenArr[56] ?? null,
+                    "Maximum ondersteunde snelheid" => $kenArr[57] ?? null
                 ];
-                return response()->json($json);
-                break;
+                return $array;
             }
         }
         fclose($kenCSV);
     }
 
-    public function maak(Request $request)
+
+
+    public function showVoertuigenAssenJson($kenteken = null)
+    {
+        return response()->json($this->showVoertuigenAssen($kenteken));//Return de array en maak er een json van
+    }
+
+    public function showVoertuigenAssenXml($kenteken = null)
+    {
+        $xml_data = new SimpleXMLElement('<root/>');
+        $array = $this->showVoertuigenAssen($kenteken);
+        $this->array_to_xml($array, $xml_data);
+        print $xml_data->asXML();
+    }
+
+    public function showVoertuigenAssen($kenteken = null)
+    {
+        $i = 0;//Hiermee hou ik de counter bij
+        $array = array();//Ik maak vast een lege array aan, waar ik straks alles inpleur
+        $kenCSV = fopen($this->krijgCSV('assen'), "r");//Haal het bestand op
+        while (($assArr = fgetcsv($kenCSV, 3000,",")) !== FALSE)//Loop door het hele bestand heen
+        {
+            if (isset($kenteken))
+            {
+                if ($assArr[0] == $kenteken)
+                {
+                    $array[$i] = //Dit is de algemene json. Hierin stop ik alle gevonden waarden het het voertuigenbestand. Tevens stop ik $braJson en $assJson erook bij zodat alles in dezelde json komt
+                        [
+                            "Kenteken" => $assArr[0],
+                            "As nummer" => $assArr[1] ?? null,
+                            "Aantal assen" => $assArr[2] ?? null,
+                            "Aangedreven as" => $assArr[3] ?? null,
+                            "Hefas" => $assArr[4] ?? null,
+                            "Plaatscode as" => $assArr[5] ?? null,
+                            "Spoorbreedte" => $assArr[6] ?? null,
+                            "Weggedrag code" => $assArr[7] ?? null,
+                            "Wettelijk Toegestane maximum aslast" => $assArr[8] ?? null,
+                            "Technisch Toegestane maximum aslast" => $assArr[9] ?? null
+                        ];
+                }
+            }
+            else
+            {
+                $array[$i] = //Dit is de algemene json. Hierin stop ik alle gevonden waarden het het voertuigenbestand. Tevens stop ik $braJson en $assJson erook bij zodat alles in dezelde json komt
+                    [
+                        "Kenteken" => $assArr[0],
+                        "As nummer" => $assArr[1] ?? null,
+                        "Aantal assen" => $assArr[2] ?? null,
+                        "Aangedreven as" => $assArr[3] ?? null,
+                        "Hefas" => $assArr[4] ?? null,
+                        "Plaatscode as" => $assArr[5] ?? null,
+                        "Spoorbreedte" => $assArr[6] ?? null,
+                        "Weggedrag code" => $assArr[7] ?? null,
+                        "Wettelijk Toegestane maximum aslast" => $assArr[8] ?? null,
+                        "Technisch Toegestane maximum aslast" => $assArr[9] ?? null
+                    ];
+            }
+            $i++;
+        }
+        fclose($kenCSV);
+        return $array;
+    }//cd /dC:\xampp\htdocs\Github\Data\Deel 2\dataprocessing
+    //>php -S localhost:8000 -t public
+
+
+    public function showVoertuigenBrandstofJson($kenteken = null)
+    {
+        return response()->json($this->showVoertuigenBrandstof($kenteken));//Return de array en maak er een json van
+    }
+
+    public function showVoertuigenBrandstofXml($kenteken = null)
+    {
+        $xml_data = new SimpleXMLElement('<root/>');
+        $array = $this->showVoertuigenBrandstof($kenteken);
+        $this->array_to_xml($array, $xml_data);
+        print $xml_data->asXML();
+    }
+
+    public function showVoertuigenBrandstof($kenteken = null): array
+    {
+        $i = 0;//Hiermee hou ik de counter bij
+        $array = array();//Ik maak vast een lege array aan, waar ik straks alles inpleur
+        $kenCSV = fopen($this->krijgCSV('brandstof'), "r");//Haal het bestand op
+        while (($braArr = fgetcsv($kenCSV, 3000,",")) !== FALSE)//Loop door het hele bestand heen
+        {
+            if (isset($kenteken))
+            {
+                if ($braArr[0] == $kenteken)
+                {
+                    $array[$i] = //Dit is de algemene json. Hierin stop ik alle gevonden waarden het het voertuigenbestand. Tevens stop ik $braJson en $assJson erook bij zodat alles in dezelde json komt
+                        [
+                            "Kenteken" => $braArr[0],
+                            "Brandstof volgnummer" => $braArr[1] ?? null,
+                            "Brandstof omschrijving" => $braArr[2] ?? null,
+                            "Brandstofverbruik buiten de stad" => $braArr[3] ?? null,
+                            "Brandstofverbruik gecombineerd" => $braArr[4] ?? null,
+                            "Brandstofverbruik stad" => $braArr[5] ?? null,
+                            "CO2 uitstoot gecombineerd" => $braArr[6] ?? null,
+                            "Geluidsniveau rijdend" => $braArr[8] ?? null,
+                            "Geluidsniveau stationair" => $braArr[9] ?? null,
+                            "Emissieklasse" => $braArr[10] ?? null,
+                            "Milliueklasse EG Goedkeuring(licht)" => $braArr[11] ?? null,
+                            "Milliueklasse EG Goedkeuring(zwaar)" => $braArr[12] ?? null,
+                            "Uitstoot deeltjes(licht)" => $braArr[13] ?? null,
+                            "Nettomaximumvermogen" => $braArr[15] ?? null,
+                            "Roetuitstoot" => $braArr[17] ?? null,
+                            "Toerental geluidsniveau" => $braArr[18] ?? null
+                        ];
+                    $i++;
+                }
+            }
+            else
+            {
+                $array[$i] = //Dit is de algemene json. Hierin stop ik alle gevonden waarden het het voertuigenbestand. Tevens stop ik $braJson en $assJson erook bij zodat alles in dezelde json komt
+                    [
+                        "Kenteken" => $braArr[0],
+                        "Brandstof volgnummer" => $braArr[1] ?? null,
+                        "Brandstof omschrijving" => $braArr[2] ?? null,
+                        "Brandstofverbruik buiten de stad" => $braArr[3] ?? null,
+                        "Brandstofverbruik gecombineerd" => $braArr[4] ?? null,
+                        "Brandstofverbruik stad" => $braArr[5] ?? null,
+                        "CO2 uitstoot gecombineerd" => $braArr[6] ?? null,
+                        "Geluidsniveau rijdend" => $braArr[8] ?? null,
+                        "Geluidsniveau stationair" => $braArr[9] ?? null,
+                        "Emissieklasse" => $braArr[10] ?? null,
+                        "Milliueklasse EG Goedkeuring(licht)" => $braArr[11] ?? null,
+                        "Milliueklasse EG Goedkeuring(zwaar)" => $braArr[12] ?? null,
+                        "Uitstoot deeltjes(licht)" => $braArr[13] ?? null,
+                        "Nettomaximumvermogen" => $braArr[15] ?? null,
+                        "Roetuitstoot" => $braArr[17] ?? null,
+                        "Toerental geluidsniveau" => $braArr[18] ?? null
+                    ];
+                $i++;
+            }
+        }
+        fclose($kenCSV);
+        return $array;
+    }
+
+
+
+    public function maakJson(Request $request)
+    {
+        $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
+        print_r($json);
+        $array = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
+        $this->maak($array);
+    }
+
+    public function maakXml(Request $request)
+    {
+        $input = $request->getContent();
+        $array = $this->xml_to_array($input);
+        $this->maak($array);
+    }
+
+    public function maak($array)
+    {
+        print_r($array);
+        $this->maakAlgemeen($array, 'voertuigen', $array['Kenteken']);
+        if (isset($array['Assen']))
+            $this->maakAlgemeen($array['Assen'], 'assen', $array['Kenteken']);
+        if (isset($array['Brandstof']))
+            $this->maakAlgemeen($array['Brandstof'], 'brandstof', $array['Kenteken']);
+    }
+
+
+    public function maakAssenJson(Request $request)
     {
         //Ik haal hier een json op uit de request, die data schrijf ik vervolgns in de CSVs. Ik lees de json uit op key, de volgorde maakt dus niet uit waarin de json is opgestled.
         $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
-
         $array = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
+        $this->maakAlgemeen($array, 'assen', $array['Kenteken']);
+    }
+
+    public function maakAssenXml(Request $request)
+    {
+        $input = $request->getContent();
+        $array = $this->xml_to_array($input);
+        $this->maakAlgemeen($array, 'assen', $array['Kenteken']);
+    }
 
 
-        //Het wegschrijven naar gekentekende voertuigen
-        $kenArr[0] = $array['Kenteken'];
-        $kenArr[1] = $array['Voertuigsoort'];
-        $kenArr[2] = $array['Merk'];
-        $kenArr[3] = $array['Handelsbenaming'];
-        $kenArr[4] = $array['Vervaldatum APK'];
-        $kenArr[5] = $array['Datum tentaamstelling'];
-        $kenArr[6] = $array['Bruto BPM'];
-        $kenArr[7] = $array['Inrichting'];
-        $kenArr[8] = $array['Aantal zitplaatsen'];
-        $kenArr[9] = $array['Eerste kleur'];
-        $kenArr[10] = $array['Tweede kleur'];
-        $kenArr[11] = $array['Aantal cilinders'];
-        $kenArr[12] = $array['Cilinderinhoud'];
-        $kenArr[13] = $array['Massa ledig voertuig'];
-        $kenArr[14] = $array['Toegestane maximum massa voertuig'];
-        $kenArr[15] = $array['Massa rijklaar'];
-        $kenArr[16] = $array['Maximum massa trekken ongeremd'];
-        $kenArr[17] = $array['Maximum massa trekken geremd'];
-        $kenArr[18] = $array['Zuinigheidslabel'];
-        $kenArr[19] = $array['Datum eerste toelating'];
-        $kenArr[20] = $array['Datum eerste afgifte Nederland'];
-        $kenArr[21] = $array['Wacht op keuren'];
-        $kenArr[22] = $array['Catalogusprijs'];
-        $kenArr[23] = $array['WAM verzekerd'];
-        $kenArr[24]  = $array['Maximale constuctiesnelheid (brom/snorfiets)'];
-        $kenArr[25] = $array['Laadvermogen'];
-        $kenArr[26] = $array['Oplegger geremd'];
-        $kenArr[27] = $array['Aanhanger autonoom geremd'];
-        $kenArr[28] = $array['Aanhanger middenas geremd'];
-        $kenArr[29] = $array['Vermogen (brom/snorfiets)'];
-        $kenArr[30] = $array['Aantal staanplaatsen'];
-        $kenArr[31] = $array['Aantal deuren'];
-        $kenArr[32] = $array['Aantal wielen'];
-        $kenArr[33] = $array['Afstand hart koppeling tot achterzijden voertuig'];
-        $kenArr[34] = $array['Afstand voorzijde voertuig tot hart koppeling'];
-        $kenArr[35] = $array['Afwijkende maximum snelheid'];
-        $kenArr[36] = $array['Lengte'];
-        $kenArr[37] = $array['Breedte'];
-        $kenArr[38] = $array['Europese voertuigcategorie'];
-        $kenArr[39] = $array['Europese voertuigcategorie toevoeging'];
-        $kenArr[40] = "";
-        $kenArr[41] = $array['Plaats chassisnummer'];
-        $kenArr[42] = $array['Technische max. masse voertuig'];
-        $kenArr[43] = $array['Type'];
-        $kenArr[44] = $array['Type gasinstalatie'];
-        $kenArr[45] = $array['Typegoedkeuringnummer'];
-        $kenArr[46] = $array['Variant'];
-        $kenArr[47] = $array['Uitvoering'];
-        $kenArr[48] = $array['Volgnummer wijziging EU typegoedkeuring'];
-        $kenArr[49] = $array['Vermogen massarijklaar'];
-        $kenArr[50] = $array['Wielbasis'];
-        $kenArr[51] = $array['Export indicator'];
-        $kenArr[52] = $array['Openstaande terugroepactie indicator'];
-        $kenArr[53] = $array['Valvaldatum tachograaf'];
-        $kenArr[54] = $array['Taxi indicator'];
-        $kenArr[55] = $array['Maximum massa samenstelling'];
-        $kenArr[56] = $array['Aantal rolstoelplaatsen'];
-        $kenArr[57] = $array['Maximum ondersteunde snelheid'];
+    public function maakBrandstofJson(Request $request)
+    {
+        //Ik haal hier een json op uit de request, die data schrijf ik vervolgns in de CSVs. Ik lees de json uit op key, de volgorde maakt dus niet uit waarin de json is opgestled.
+        $json = $request->input();//Hier haal ik de json op die is meegegeven in de pos
+        $array = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
+        $this->maakAlgemeen($array, 'assen', $array['Kenteken']);
+    }
 
-        $file = fopen($this->krijgCSV('voertuigen'), 'a');
+    public function maakBrandstofXml(Request $request)
+    {
+        $input = $request->getContent();
+        $array = $this->xml_to_array($input);
+        $this->maakAlgemeen($array, 'brandstof', $array['Kenteken']);
+    }
+
+
+    public function maakAlgemeen($array, $CSV, $kenteken)
+    {
+        $kenCSV = fopen($this->krijgCSV($CSV), "r");//Haal het bestand op
+        $arrayEerstelijn = (fgetcsv($kenCSV, 3000,","));
+
+        $kenArr[0] = $kenteken;
+        $counter = 0;
+        foreach ($arrayEerstelijn as $waardeEerstelijn)
+        {
+            $waardeEerstelijn = str_replace("_", " ", $waardeEerstelijn);
+            foreach ($array as $key => $waarde)
+            {
+                if ($waardeEerstelijn == $key)
+                    $kenArr[$counter] = $waarde;
+            }
+            $counter++;
+        }
+
+        $file = fopen($this->krijgCSV($CSV), 'a');
         fputcsv($file, $kenArr);
         fclose($file);
-
-        $this->maakAssen2($array['Assen'], $array['Kenteken']);
-
-        $this->maakBrandstof2($array['Brandstof'], $array['Kenteken']);
     }
+
+
 
     public function delete($kenteken)
     {
@@ -386,233 +451,14 @@ class voertuigenController extends Controller
         $this->deleteAlgemeen($kenteken, 'brandstof');
     }
 
-    public function update(Request $request, $kenteken)
-    {
-        //Deze functie is nogal ingewikkeld, het is in feite een combi tussen 'maak' en 'delete'
-        $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
-
-        $jsonArray = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
-
-        $this->updateAlgemeen($jsonArray, $kenteken, 'voertuigen');
-
-        //Assen updaten
-        if (array_key_exists('Assen', $jsonArray))//Als er een key 'brandstof' is meegestuurd, willen we blijkbaar de bradstof updaten. Als dit niet het geval is, hoeven we niks up te daten.
-        {
-            $this->updateAlgemeen($jsonArray['Assen'], $kenteken, 'assen');
-        }
-
-        //Brandstof updaten
-        if (array_key_exists('Brandstof', $jsonArray))//Als er een key 'brandstof' is meegestuurd, willen we blijkbaar de bradstof updaten. Als dit niet het geval is, hoeven we niks up te daten.
-        {
-            $this->updateAlgemeen($jsonArray['Brandstof'], $kenteken, 'brandstof');
-        }
-    }
-
-    public function showAllevoertuigenAssen($kenteken = null)
-    {
-        ini_set('max_execution_time', 3000); // Ik zet de maximale executietijd op 15 min. De stock 2 min. zijn te kort om het hele bestand door de lezen.
-        $i = 0;//Hiermee hou ik de counter bij
-        $json = array();//Ik maak vast een lege array aan, waar ik straks alles inpleur
-        $kenCSV = fopen($this->krijgCSV('assen'), "r");//Haal het bestand op
-        while (($assArr = fgetcsv($kenCSV, 3000,",")) !== FALSE)//Loop door het hele bestand heen
-        {
-            if (isset($kenteken))
-            {
-                if ($assArr[0] == $kenteken)
-                {
-                    $json[$i] = //Dit is de algemene json. Hierin stop ik alle gevonden waarden het het voertuigenbestand. Tevens stop ik $braJson en $assJson erook bij zodat alles in dezelde json komt
-                        [
-                            "Kenteken" => $kenteken,
-                            "As nummer" => $assArr[1],
-                            "Aantal assen" => $assArr[2],
-                            "Aangedreven as" => $assArr[3],
-                            "Hefas" => $assArr[4],
-                            "Plaatscode as" => $assArr[5],
-                            "Spoorbreedte" => $assArr[6],
-                            "Weggedrag code" => $assArr[7],
-                            "Wettelijk Toegestane maximum aslast" => $assArr[8],
-                            "Technisch Toegestane maximum aslast" => $assArr[9]
-                        ];
-                    $i++;
-                }
-            }
-            else
-            {
-                $json[$i] = //Dit is de algemene json. Hierin stop ik alle gevonden waarden het het voertuigenbestand. Tevens stop ik $braJson en $assJson erook bij zodat alles in dezelde json komt
-                    [
-                        "Kenteken" => $assArr[0],
-                        "As nummer" => $assArr[1],
-                        "Aantal assen" => $assArr[2],
-                        "Aangedreven as" => $assArr[3],
-                        "Hefas" => $assArr[4],
-                        "Plaatscode as" => $assArr[5],
-                        "Spoorbreedte" => $assArr[6],
-                        "Weggedrag code" => $assArr[7],
-                        "Wettelijk Toegestane maximum aslast" => $assArr[8],
-                        "Technisch Toegestane maximum aslast" => $assArr[9]
-                    ];
-                $i++;
-            }
-        }
-        return response()->json($json);//Return de array en maak er een json van
-        fclose($kenCSV);;
-    }
-
-    public function maakAssen(Request $request)
-    {
-        //Ik haal hier een json op uit de request, die data schrijf ik vervolgns in de CSVs. Ik lees de json uit op key, de volgorde maakt dus niet uit waarin de json is opgestled.
-        $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
-
-        $array = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
-
-        $this->maakAssen2($array);
-    }
-
-    public function maakAssen2($array)
-    {
-        $assArr[0] = $array['Kenteken'];
-        $assArr[1] = $array['As nummer'];
-        $assArr[2] = $array['Aantal assen'];
-        $assArr[3] = $array['Aangedreven as'];
-        $assArr[4] = $array['Hefas'];
-        $assArr[5] = $array['Plaatscode as'];
-        $assArr[6] = $array['Spoorbreedte'];
-        $assArr[7] = $array['Weggedrag code'];
-        $assArr[8] = $array['Wettelijk Toegestane maximum aslast'];
-        $assArr[9] = $array['Technisch Toegestane maximum aslast'];
-
-        $file = fopen($this->krijgCSV('assen'), 'a');
-        fputcsv($file, $assArr);
-        fclose($file);
-    }
-
     public function deleteAssen($kenteken)
     {
         $this->deleteAlgemeen($kenteken, 'assen');
     }
 
-    public function updateAssen(Request $request, $kenteken)
-    {
-        //Deze functie is nogal ingewikkeld, het is in feite een combi tussen 'maak' en 'delete'
-        $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
-
-        $jsonArray = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
-
-        $this->updateAlgemeen($jsonArray, $kenteken, 'assen');
-    }
-
-    public function showAllevoertuigenBrandstof($kenteken = null)
-    {
-        ini_set('max_execution_time', 3000); // Ik zet de maximale executietijd op 15 min. De stock 2 min. zijn te kort om het hele bestand door de lezen.
-        $i = 0;//Hiermee hou ik de counter bij
-        $json = array();//Ik maak vast een lege array aan, waar ik straks alles inpleur
-        $kenCSV = fopen($this->krijgCSV('brandstof'), "r");//Haal het bestand op
-        while (($braArr = fgetcsv($kenCSV, 3000,",")) !== FALSE)//Loop door het hele bestand heen
-        {
-            if (isset($kenteken))
-            {
-                if ($braArr[0] == $kenteken)
-                {
-                    $json[$i] = //Dit is de algemene json. Hierin stop ik alle gevonden waarden het het voertuigenbestand. Tevens stop ik $braJson en $assJson erook bij zodat alles in dezelde json komt
-                        [
-                            "Kenteken" => $kenteken,
-                            "Brandstof volgnummer" => $braArr[1],
-                            "Brondstof omschrijving" => $braArr[2],
-                            "Brandstofverbruik buiten de stad" => $braArr[3],
-                            "Brandstofverbruik gecombineerd" => $braArr[4],
-                            "Brandstofverbruik stad" => $braArr[5],
-                            "CO2 uitstoot gecombineerd" => $braArr[6],
-                            "Geluidsniveau rijdend" => $braArr[8],
-                            "Geluidsniveau stationair" => $braArr[9],
-                            "Emissieklasse" => $braArr[10],
-                            "Milliueklasse EG Goedkeuring(licht)" => $braArr[11],
-                            "Milliueklasse EG Goedkeuring(zwaar)" => $braArr[12],
-                            "Uitstoot deeltjes(licht)" => $braArr[13],
-                            "Nettomaximumvermogen" => $braArr[15],
-                            "Roetuitstoot" => $braArr[17],
-                            "Toerental eluidsniveau" => $braArr[18]
-                        ];
-                    $i++;
-                }
-            }
-            else
-            {
-                $json[$i] = //Dit is de algemene json. Hierin stop ik alle gevonden waarden het het voertuigenbestand. Tevens stop ik $braJson en $assJson erook bij zodat alles in dezelde json komt
-                    [
-                        "Kenteken" => $braArr[0],
-                        "Brandstof volgnummer" => $braArr[1],
-                        "Brondstof omschrijving" => $braArr[2],
-                        "Brandstofverbruik buiten de stad" => $braArr[3],
-                        "Brandstofverbruik gecombineerd" => $braArr[4],
-                        "Brandstofverbruik stad" => $braArr[5],
-                        "CO2 uitstoot gecombineerd" => $braArr[6],
-                        "Geluidsniveau rijdend" => $braArr[8],
-                        "Geluidsniveau stationair" => $braArr[9],
-                        "Emissieklasse" => $braArr[10],
-                        "Milliueklasse EG Goedkeuring(licht)" => $braArr[11],
-                        "Milliueklasse EG Goedkeuring(zwaar)" => $braArr[12],
-                        "Uitstoot deeltjes(licht)" => $braArr[13],
-                        "Nettomaximumvermogen" => $braArr[15],
-                        "Roetuitstoot" => $braArr[17],
-                        "Toerental eluidsniveau" => $braArr[18]
-                    ];
-                $i++;
-            }
-        }
-        return response()->json($json);//Return de array en maak er een json van
-        fclose($kenCSV);;
-    }
-
-    public function maakBrandstof(Request $request)
-    {
-        //Ik haal hier een json op uit de request, die data schrijf ik vervolgns in de CSVs. Ik lees de json uit op key, de volgorde maakt dus niet uit waarin de json is opgestled.
-        $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
-
-        $array = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
-
-        $this->maakAssen2($array, $array['Kenteken']);
-    }
-
-    public function maakBrandstof2($array, $kenteken)
-    {
-        $braArr[0] = $kenteken;
-        $braArr[1] = $array['Brandstof volgnummer'];
-        $braArr[2] = $array['Brondstof omschrijving'];
-        $braArr[3] = $array['Brandstofverbruik buiten de stad'];
-        $braArr[4] = $array['Brandstofverbruik gecombineerd'];
-        $braArr[5] = $array['Brandstofverbruik stad'];
-        $braArr[6] = $array['CO2 uitstoot gecombineerd'];
-        $braArr[7] = "";
-        $braArr[8] = $array['Geluidsniveau rijdend'];
-        $braArr[9] = $array['Geluidsniveau stationair'];
-        $braArr[10] = $array['Emissieklasse'];
-        $braArr[11] = $array['Milliueklasse EG Goedkeuring(licht)'];
-        $braArr[12] = $array['Milliueklasse EG Goedkeuring(zwaar)'];
-        $braArr[13] = $array['Uitstoot deeltjes(licht)'];
-        $braArr[14] = "";
-        $braArr[15] = $array['Nettomaximumvermogen'];
-        $braArr[16] = "";
-        $braArr[17] = $array['Roetuitstoot'];
-        $braArr[18] = $array['Toerental eluidsniveau'];
-
-        $file = fopen($this->krijgCSV('brandstof'), 'a');
-        fputcsv($file, $braArr);
-        fclose($file);
-    }
-
     public function deleteBrandstof($kenteken)
     {
         $this->deleteAlgemeen($kenteken, 'brandstof');
-    }
-
-    public function updateBrandstof(Request $request, $kenteken)
-    {
-        //Deze functie is nogal ingewikkeld, het is in feite een combi tussen 'maak' en 'delete'
-        $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
-
-        $jsonArray = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
-
-        $this->updateAlgemeen($jsonArray, $kenteken, 'brandstof');
     }
 
     public function deleteAlgemeen($kenteken, $CSV)
@@ -642,6 +488,71 @@ class voertuigenController extends Controller
             $k++;
         }
     }
+
+
+
+    public function updateJson(Request $request, $kenteken)
+    {
+        //Deze functie is nogal ingewikkeld, het is in feite een combi tussen 'maak' en 'delete'
+        $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
+        $jsonArray = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
+        $this->update($jsonArray, $kenteken);
+    }
+
+    public function updateXML(Request $request, $kenteken)
+    {
+        $input = $request->getContent();
+        $array = $this->xml_to_array($input);
+        $this->update($array, $kenteken);
+    }
+
+    public function update($array, $kenteken)
+    {
+        $this->updateAlgemeen($array, $kenteken, 'voertuigen');
+
+        //Assen updaten
+        if (array_key_exists('Assen', $array))//Als er een key 'brandstof' is meegestuurd, willen we blijkbaar de bradstof updaten. Als dit niet het geval is, hoeven we niks up te daten.
+            $this->updateAlgemeen($array['Assen'], $kenteken, 'assen');
+
+        //Brandstof updaten
+        if (array_key_exists('Brandstof', $array))//Als er een key 'brandstof' is meegestuurd, willen we blijkbaar de bradstof updaten. Als dit niet het geval is, hoeven we niks up te daten.
+            $this->updateAlgemeen($array['Brandstof'], $kenteken, 'brandstof');
+    }
+
+
+    public function updateAssenJson(Request $request, $kenteken)
+    {
+    //Deze functie is nogal ingewikkeld, het is in feite een combi tussen 'maak' en 'delete'
+    $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
+
+    $jsonArray = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
+
+    $this->updateAlgemeen($jsonArray, $kenteken, 'assen');
+    }
+
+    public function updateAssenXml(Request $request, $kenteken)
+    {
+        $input = $request->getContent();
+        $array = $this->xml_to_array($input);
+        $this->updateAlgemeen($array, $kenteken, 'assen');
+    }
+
+
+    public function updateBrandstofJson(Request $request, $kenteken)
+    {
+        //Deze functie is nogal ingewikkeld, het is in feite een combi tussen 'maak' en 'delete'
+        $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
+        $jsonArray = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
+        $this->updateAlgemeen($jsonArray, $kenteken, 'brandstof');
+    }
+
+    public function updateBrandstofXml(Request $request, $kenteken)
+    {
+        $input = $request->getContent();
+        $array = $this->xml_to_array($input);
+        $this->updateAlgemeen($array, $kenteken, 'brandstof');
+    }
+
 
     public function updateAlgemeen($inputArray, $kenteken, $CSV)
     {
@@ -677,5 +588,39 @@ class voertuigenController extends Controller
             }
             $i++;
         }
+    }
+
+
+
+    function array_to_xml($data, &$xml_data )
+    {
+        foreach($data as $key => $value )
+        {
+            $key = str_replace(" ", "_", $key);
+            if (is_array($value) || strval($value))
+            {
+                if( is_array($value))
+                {
+                    if( is_numeric($key))
+                    {
+                        $key = 'item'.$key; //dealing with <0/>..<n/> issues
+                    }
+                    $subnode = $xml_data->addChild($key);
+                    $this->array_to_xml($value, $subnode);
+                }
+                else
+                {
+                    $xml_data->addChild("$key",htmlspecialchars("$value"));
+                }
+            }
+        }
+    }
+
+    function xml_to_array($input): array
+    {
+        $xml = simplexml_load_string($input, "SimpleXMLElement", LIBXML_NOCDATA);
+        $json = json_encode($xml);
+        $array = json_decode($json,TRUE);
+        return $array;
     }
 }
