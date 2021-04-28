@@ -1,0 +1,36 @@
+{
+  "$schema": "Open Data RDW: Gekentekende_voertuigen_assen",
+  "type": "object",
+  "properties": {
+    "Kentenken": {
+      "type": "string"
+    },
+    "As nummer": {
+      "type": "integer"
+    },
+    "Aantal assen": {
+      "type": "integer"
+    },
+    "Aangedreven as": {
+      "type": "boolean"
+    },
+    "Hefas": {
+      "type": "string"
+    },
+    "Plaatscode as": {
+      "type": "string"
+    },
+    "Spoorbreedte": {
+      "type": "integer"
+    },
+    "Weggedrag code": {
+      "type": "string"
+    },
+    "Wettelijk Toegestane maximum aslast": {
+      "type": "integer"
+    },
+    "Technisch Toegestane maximum aslast": {
+      "type": "integer"
+    }
+  }
+}
