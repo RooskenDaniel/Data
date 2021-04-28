@@ -374,52 +374,9 @@ class voertuigenController extends Controller
         fputcsv($file, $kenArr);
         fclose($file);
 
+        $this->maakAssen2($array['Assen'], $array['Kenteken']);
 
-        //Het wegschrijven naar de branstofcsv
-        $BrandstofArr = $array['Brandstof'];
-
-        $braArr[0] = $array['Kenteken'];
-        $braArr[1] = $BrandstofArr['Brandstof volgnummer'];
-        $braArr[2] = $BrandstofArr['Brondstof omschrijving'];
-        $braArr[3] = $BrandstofArr['Brandstofverbruik buiten de stad'];
-        $braArr[4] = $BrandstofArr['Brandstofverbruik gecombineerd'];
-        $braArr[5] = $BrandstofArr['Brandstofverbruik stad'];
-        $braArr[6] = $BrandstofArr['CO2 uitstoot gecombineerd'];
-        $braArr[7] = "";
-        $braArr[8] = $BrandstofArr['Geluidsniveau rijdend'];
-        $braArr[9] = $BrandstofArr['Geluidsniveau stationair'];
-        $braArr[10] = $BrandstofArr['Emissieklasse'];
-        $braArr[11] = $BrandstofArr['Milliueklasse EG Goedkeuring(licht)'];
-        $braArr[12] = $BrandstofArr['Milliueklasse EG Goedkeuring(zwaar)'];
-        $braArr[13] = $BrandstofArr['Uitstoot deeltjes(licht)'];
-        $braArr[14] = "";
-        $braArr[15] = $BrandstofArr['Nettomaximumvermogen'];
-        $braArr[16] = "";
-        $braArr[17] = $BrandstofArr['Roetuitstoot'];
-        $braArr[18] = $BrandstofArr['Toerental eluidsniveau'];
-
-        $file = fopen($this->krijgCSV('brandstof'), 'a');
-        fputcsv($file, $braArr);
-        fclose($file);
-
-
-        //Het wegschrijven naar de assencsv
-        $assenArr = $array['Assen'];
-
-        $assArr[0] = $array['Kenteken'];
-        $assArr[1] = $assenArr['As nummer'];
-        $assArr[2] = $assenArr['Aantal assen'];
-        $assArr[3] = $assenArr['Aangedreven as'];
-        $assArr[4] = $assenArr['Hefas'];
-        $assArr[5] = $assenArr['Plaatscode as'];
-        $assArr[6] = $assenArr['Spoorbreedte'];
-        $assArr[7] = $assenArr['Weggedrag code'];
-        $assArr[8] = $assenArr['Wettelijk Toegestane maximum aslast'];
-        $assArr[9] = $assenArr['Technisch Toegestane maximum aslast'];
-
-        $file = fopen($this->krijgCSV('assen'), 'a');
-        fputcsv($file, $assArr);
-        fclose($file);
+        $this->maakBrandstof2($array['Brandstof'], $array['Kenteken']);
     }
 
     public function delete($kenteken)
@@ -436,113 +393,18 @@ class voertuigenController extends Controller
 
         $jsonArray = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
 
-        //Voertuigen updaten
-        $voertuigenArray = [];
-        $file = fopen($this->krijgCSV('voertuigen'), 'r');
-        while (($lijn = fgetcsv($file, 3000,",")) !== FALSE)
+        $this->updateAlgemeen($jsonArray, $kenteken, 'voertuigen');
+
+        //Assen updaten
+        if (array_key_exists('Assen', $jsonArray))//Als er een key 'brandstof' is meegestuurd, willen we blijkbaar de bradstof updaten. Als dit niet het geval is, hoeven we niks up te daten.
         {
-            array_push($voertuigenArray, $lijn);
-        }
-        fclose($file);
-        print_r($voertuigenArray);
-        $i=0;
-        foreach ($voertuigenArray as &$waarde)
-        {
-            if ($waarde[0] === $kenteken)
-            {
-                foreach ($jsonArray as $jsonKey => $jsonValue)
-                {
-                    foreach ($voertuigenArray[$i] as $voertuigKey => $voertuigValue)
-                    {
-                        if ($jsonKey == $voertuigenArray[0][$voertuigKey])
-                        {
-                            $voertuigenArray[$i][$voertuigKey] = $jsonValue;
-                        }
-                    }
-                }
-                $file = fopen($this->krijgCSV('voertuigen'), 'w');
-                foreach ($voertuigenArray as $line)
-                {
-                    fputcsv($file, $line);
-                }
-                fclose($file);
-                break;
-            }
-            $i++;
+            $this->updateAlgemeen($jsonArray['Assen'], $kenteken, 'assen');
         }
 
         //Brandstof updaten
         if (array_key_exists('Brandstof', $jsonArray))//Als er een key 'brandstof' is meegestuurd, willen we blijkbaar de bradstof updaten. Als dit niet het geval is, hoeven we niks up te daten.
         {
-            $brandstofArray = [];
-            $file = fopen($this->krijgCSV('brandstof'), 'r');
-            while (($lijn = fgetcsv($file, 3000,",")) !== FALSE)
-            {
-                array_push($brandstofArray, $lijn);
-            }
-            fclose($file);
-            $i=0;
-            foreach ($brandstofArray as &$waarde)
-            {
-                if ($waarde[0] === $kenteken)
-                {
-                    foreach ($jsonArray['Brandstof'] as $jsonKey => $jsonValue)
-                    {
-                        foreach ($brandstofArray[$i] as $voertuigKey => $voertuigValue)
-                        {
-                            if ($jsonKey == $brandstofArray[0][$voertuigKey])
-                            {
-                                $brandstofArray[$i][$voertuigKey] = $jsonValue;
-                            }
-                        }
-                    }
-                    $file = fopen($this->krijgCSV('brandstof'), 'w');
-                    foreach ($brandstofArray as $line)
-                    {
-                        fputcsv($file, $line);
-                    }
-                    fclose($file);
-                    break;
-                }
-                $i++;
-            }
-        }
-
-        //Assen updaten
-        if (array_key_exists('Assen', $jsonArray))//Als er een key 'brandstof' is meegestuurd, willen we blijkbaar de bradstof updaten. Als dit niet het geval is, hoeven we niks up te daten.
-        {
-            $assenArray = [];
-            $file = fopen($this->krijgCSV('assen'), 'r');
-            while (($lijn = fgetcsv($file, 3000,",")) !== FALSE)
-            {
-                array_push($assenArray, $lijn);
-            }
-            fclose($file);
-            $i=0;
-            foreach ($assenArray as &$waarde)
-            {
-                if ($waarde[0] === $kenteken)
-                {
-                    foreach ($jsonArray['Assen'] as $jsonKey => $jsonValue)
-                    {
-                        foreach ($assenArray[$i] as $voertuigKey => $voertuigValue)
-                        {
-                            if ($jsonKey == $assenArray[0][$voertuigKey])
-                            {
-                                $assenArray[$i][$voertuigKey] = $jsonValue;
-                            }
-                        }
-                    }
-                    $file = fopen($this->krijgCSV('assen'), 'w');
-                    foreach ($assenArray as $line)
-                    {
-                        fputcsv($file, $line);
-                    }
-                    fclose($file);
-                    break;
-                }
-                $i++;
-            }
+            $this->updateAlgemeen($jsonArray['Brandstof'], $kenteken, 'brandstof');
         }
     }
 
@@ -603,6 +465,11 @@ class voertuigenController extends Controller
 
         $array = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
 
+        $this->maakAssen2($array);
+    }
+
+    public function maakAssen2($array)
+    {
         $assArr[0] = $array['Kenteken'];
         $assArr[1] = $array['As nummer'];
         $assArr[2] = $array['Aantal assen'];
@@ -703,7 +570,12 @@ class voertuigenController extends Controller
 
         $array = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
 
-        $braArr[0] = $array['Kenteken'];
+        $this->maakAssen2($array, $array['Kenteken']);
+    }
+
+    public function maakBrandstof2($array, $kenteken)
+    {
+        $braArr[0] = $kenteken;
         $braArr[1] = $array['Brandstof volgnummer'];
         $braArr[2] = $array['Brondstof omschrijving'];
         $braArr[3] = $array['Brandstofverbruik buiten de stad'];
