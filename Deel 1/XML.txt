@@ -1,2 +1,0 @@
-Vanwege tijdsnood heb ik (nog) niks aan XML gedaan.
-Toch heb ik besloten de opdracht in te leveren zodat ik in ieder geval vast een beoordeling op het JSON-gedeelte kan krijgen.

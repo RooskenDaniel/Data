@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Assen" type="AssenType"/>
+  <xs:complexType name="AssenType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Kenteken"/>
+        <xs:element type="xs:integer" name="As_nummer"/>
+        <xs:element type="xs:integer" name="Aantal_assen"/>
+        <xs:element type="xs:string" name="Aangedreven_as"/>
+        <xs:element type="xs:string" name="Hefas"/>
+        <xs:element type="xs:string" name="Plaatscode_as"/>
+        <xs:element type="xs:integer" name="Spoorbreedte"/>
+        <xs:element type="xs:string" name="Weggedrag_code"/>
+        <xs:element type="xs:integer" name="Wettelijk_toegestane_maximum_aslast"/>
+        <xs:element type="xs:integer" name="Technisch_toegestane_maximum_aslast"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

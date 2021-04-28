@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Gekentekende_voertuigen" type="VoertuigType"/>
+  <xs:complexType name="BrandstofType">
+    <xs:sequence>
+      <xs:element type="xs:integer" name="Brandstof_volgnummer"/>
+      <xs:element type="xs:string" name="Brandstof_omschrijving"/>
+      <xs:element type="xs:string" name="Brandstofverbruik_buiten_de_stad"/>
+      <xs:element type="xs:string" name="Brandstofverbruik_gecombineerd"/>
+      <xs:element type="xs:decimal" name="Brandstofverbruik_stad"/>
+      <xs:element type="xs:integer" name="CO2_uitstoot_gecombineerd"/>
+      <xs:element type="xs:integer" name="Geluidsniveau_rijdend"/>
+      <xs:element type="xs:integer" name="Geluidsniveau_stationair"/>
+      <xs:element type="xs:string" name="Emisieklasse"/>
+      <xs:element type="xs:string" name="Milliueklasse_EG_goedkeuring_licht"/>
+      <xs:element type="xs:string" name="Milliueklasse_EG_goedkeuring_zwaar"/>
+      <xs:element type="xs:string" name="Uitstoot_deeltjes_licht"/>
+      <xs:element type="xs:integer" name="Nettomaximumvermogen"/>
+      <xs:element type="xs:integer" name="Roetuitstoot"/>
+      <xs:element type="xs:integer" name="Toerental_geluidsniveau"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AssenType">
+    <xs:sequence>
+      <xs:element type="xs:integer" name="As_nummer"/>
+      <xs:element type="xs:integer" name="Aantal_assen"/>
+      <xs:element type="xs:string" name="Aangedreven_as"/>
+      <xs:element type="xs:string" name="Hefas"/>
+      <xs:element type="xs:string" name="Plaatscode_as"/>
+      <xs:element type="xs:integer" name="Spoorbreedte"/>
+      <xs:element type="xs:string" name="Weggedrag_code"/>
+      <xs:element type="xs:integer" name="Wettelijk_toegestane_maximum_aslast"/>
+      <xs:element type="xs:integer" name="Technisch_toegestane_maximum_aslast"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VoertuigType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Kenteken"/>
+      <xs:element type="BrandstofType" name="Brandstof"/>
+      <xs:element type="AssenType" name="Assen"/>
+      <xs:element type="xs:string" name="Voertuigsoort"/>
+      <xs:element type="xs:string" name="Merk"/>
+      <xs:element type="xs:string" name="Handelsbenaming"/>
+      <xs:element type="xs:date" name="Vervaldatum_APK"/>
+      <xs:element type="xs:date" name="Datum_tentaamstelling"/>
+      <xs:element type="xs:integer" name="Bruto_BMP"/>
+      <xs:element type="xs:string" name="Inrichting"/>
+      <xs:element type="xs:string" name="Aantal-zitplaatsen"/>
+      <xs:element type="xs:string" name="Eerste_kleur"/>
+      <xs:element type="xs:string" name="Tweede_kleur"/>
+      <xs:element type="xs:integer" name="Aantal_cilinders"/>
+      <xs:element type="xs:integer" name="Cilinderinhoud"/>
+      <xs:element type="xs:integer" name="Massa_ledig_voertuig"/>
+      <xs:element type="xs:integer" name="Toegestane_maximum_massa_voertuig"/>
+      <xs:element type="xs:integer" name="Massa_rijklaar"/>
+      <xs:element type="xs:integer" name="Maximum_massa_trekken_ongeremd"/>
+      <xs:element type="xs:integer" name="Maximum_massa_trekken_geremd"/>
+      <xs:element type="xs:string" name="Zuinigheidslabel"/>
+      <xs:element type="xs:date" name="Datum_eerste_toelating"/>
+      <xs:element type="xs:date" name="Datum_eerste_afgifte_nederland"/>
+      <xs:element type="xs:string" name="Wacht_op_keuren"/>
+      <xs:element type="xs:integer" name="Catalogusprijs"/>
+      <xs:element type="xs:boolean" name="WAM_verzekerd"/>
+      <xs:element type="xs:integer" name="Maximale_constructiesnelheid_brom_snorfiets"/>
+      <xs:element type="xs:integer" name="laadvermogen"/>
+      <xs:element type="xs:integer" name="Oplegger_geremd"/>
+      <xs:element type="xs:integer" name="Aanhanger_autonoom_geremd"/>
+      <xs:element type="xs:integer" name="Aanhanger_middenas_geremd"/>
+      <xs:element type="xs:integer" name="Vermogen_brom_snorfiets"/>
+      <xs:element type="xs:integer" name="Aantal_staanplaatsen"/>
+      <xs:element type="xs:integer" name="Aantal_deuren"/>
+      <xs:element type="xs:integer" name="Aantal_wielen"/>
+      <xs:element type="xs:integer" name="Afstand_hart_koppeling_tot_achterzijde_voertuig"/>
+      <xs:element type="xs:integer" name="Afstand_voorzijde_voertuig_tot_hart_koppeling"/>
+      <xs:element type="xs:integer" name="Afwijkende_maximum_snelheid"/>
+      <xs:element type="xs:integer" name="Lengthe"/>
+      <xs:element type="xs:integer" name="Breedte"/>
+      <xs:element type="xs:string" name="Europese_voertuigcategorie"/>
+      <xs:element type="xs:string" name="Europese_voertuigcategorie_toevoeging"/>
+      <xs:element type="xs:string" name="Plaats_chassisnummer"/>
+      <xs:element type="xs:integer" name="Technische_max._massa_voertuig"/>
+      <xs:element type="xs:string" name="Type"/>
+      <xs:element type="xs:string" name="Type_gasinstalatie"/>
+      <xs:element type="xs:string" name="Typegoedkeuringnummer"/>
+      <xs:element type="xs:string" name="Variant"/>
+      <xs:element type="xs:string" name="Uitvoering"/>
+      <xs:element type="xs:string" name="Volgnummer_wijzeging_EU_typegoedkeuring"/>
+      <xs:element type="xs:string" name="Vermogen_massarijklaar"/>
+      <xs:element type="xs:integer" name="Wielbasis"/>
+      <xs:element type="xs:boolean" name="Export_indicator"/>
+      <xs:element type="xs:boolean" name="Openstaande_terugroepactie_indicator"/>
+      <xs:element type="xs:date" name="Vervaldatum_tachograaf"/>
+      <xs:element type="xs:boolean" name="Taxi_indicator"/>
+      <xs:element type="xs:integer" name="Maximum_massa_samenstelling"/>
+      <xs:element type="xs:integer" name="Aantal_rolstoelzitplaatsen"/>
+      <xs:element type="xs:integer" name="Maximum_ondersteunde_snelheid"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

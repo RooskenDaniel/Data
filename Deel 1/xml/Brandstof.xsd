@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="Brandstof" type="BrandstofType"/>
+        <xs:complexType name="BrandstofType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="Kenteken"/>
+            <xs:element type="xs:integer" name="Brandstof_volgnummer"/>
+            <xs:element type="xs:string" name="Brandstof_omschrijving"/>
+            <xs:element type="xs:string" name="Brandstofverbruik_buiten_de_stad"/>
+            <xs:element type="xs:string" name="Brandstofverbruik_gecombineerd"/>
+            <xs:element type="xs:decimal" name="Brandstofverbruik_stad"/>
+            <xs:element type="xs:integer" name="CO2_uitstoot_gecombineerd"/>
+            <xs:element type="xs:integer" name="Geluidsniveau_rijdend"/>
+            <xs:element type="xs:integer" name="Geluidsniveau_stationair"/>
+            <xs:element type="xs:string" name="Emisieklasse"/>
+            <xs:element type="xs:string" name="Milliueklasse_EG_goedkeuring_licht"/>
+            <xs:element type="xs:string" name="Milliueklasse_EG_goedkeuring_zwaar"/>
+            <xs:element type="xs:string" name="Uitstoot_deeltjes_licht"/>
+            <xs:element type="xs:integer" name="Nettomaximumvermogen"/>
+            <xs:element type="xs:integer" name="Roetuitstoot"/>
+            <xs:element type="xs:integer" name="Toerental_geluidsniveau"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
