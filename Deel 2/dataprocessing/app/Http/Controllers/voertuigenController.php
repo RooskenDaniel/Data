@@ -62,8 +62,8 @@ class voertuigenController extends Controller
             $json[$i] = //Dit is de algemene json. Hierin stop ik alle gevonden waarden het het voertuigenbestand. Tevens stop ik $braJson en $assJson erook bij zodat alles in dezelde json komt
             [
                 "Kenteken" => $kenArr[0],
-                "Brandstof" => $this->showVoertuigenBrandstof($kenArr[0]),
-                "Assen" => $this->showVoertuigenAssen($kenArr[0]),
+                "Brandstof" => $this->showVoertuigenBrandstof($kenArr[0]),//Haal info over de brandstof op
+                "Assen" => $this->showVoertuigenAssen($kenArr[0]),//Haal info over de assen op
                 "Voertuigsoort" => $kenArr[1],
                 "Merk" => $kenArr[2],
                 "Handelsbenaming" => $kenArr[3],
@@ -128,7 +128,7 @@ class voertuigenController extends Controller
     }
 
 
-
+    //Onderstaande functies voeren allebui 'showEenVoertuig' uit, het verschil is of ze het omzetten in json of xml
     public function showEenvoertuigJson($kenteken)
     {
         $array = $this->showEenvoertuig($kenteken);
@@ -137,6 +137,7 @@ class voertuigenController extends Controller
 
     public function showEenvoertuigXML($kenteken)
     {
+        //Haal de data op en zet het om in een xml
         $xml_data = new SimpleXMLElement('<root/>');
         $array = $this->showEenvoertuig($kenteken);
         $this->array_to_xml($array, $xml_data);
@@ -145,12 +146,12 @@ class voertuigenController extends Controller
 
     public function showEenvoertuig($kenteken)
     {
-
+        //Haal de info op van een voertuig met kentken
         $kenCSV = fopen($this->krijgCSV('voertuigen'), "r");
         while (($kenArr = fgetcsv($kenCSV, 3000,",")) !== FALSE)
         {
 
-            if ($kenArr[0] == $kenteken)//Deze funtie werkt hetzelfde als 'showAlleVoertuigen' alleen zit deze check erbij. Zo gaat hij alleen verder wanneer het gevonden kenteken overeenkomt met de kenteken uit de request. Deze functie is ook veel sneller omdat hij maar een keer naar brandstof en assen hoeft te zoeken i.p.v. bij ieder voertuig.
+            if ($kenArr[0] == $kenteken)
             {
                 $array =
                 [
@@ -224,7 +225,7 @@ class voertuigenController extends Controller
 
     public function showVoertuigenAssenJson($kenteken = null)
     {
-        return response()->json($this->showVoertuigenAssen($kenteken));//Return de array en maak er een json van
+        return response()->json($this->showVoertuigenAssen($kenteken));
     }
 
     public function showVoertuigenAssenXml($kenteken = null)
@@ -281,8 +282,7 @@ class voertuigenController extends Controller
         }
         fclose($kenCSV);
         return $array;
-    }//cd /dC:\xampp\htdocs\Github\Data\Deel 2\dataprocessing
-    //>php -S localhost:8000 -t public
+    }
 
 
     public function showVoertuigenBrandstofJson($kenteken = null)
@@ -405,9 +405,8 @@ class voertuigenController extends Controller
 
     public function maakBrandstofJson(Request $request)
     {
-        //Ik haal hier een json op uit de request, die data schrijf ik vervolgns in de CSVs. Ik lees de json uit op key, de volgorde maakt dus niet uit waarin de json is opgestled.
-        $json = $request->input();//Hier haal ik de json op die is meegegeven in de pos
-        $array = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
+        $json = $request->input();
+        $array = json_decode(json_encode($json),true);
         $this->maakAlgemeen($array, 'assen', $array['Kenteken']);
     }
 
@@ -493,9 +492,8 @@ class voertuigenController extends Controller
 
     public function updateJson(Request $request, $kenteken)
     {
-        //Deze functie is nogal ingewikkeld, het is in feite een combi tussen 'maak' en 'delete'
-        $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
-        $jsonArray = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
+        $json = $request->input();
+        $jsonArray = json_decode(json_encode($json),true);
         $this->update($jsonArray, $kenteken);
     }
 
@@ -511,21 +509,20 @@ class voertuigenController extends Controller
         $this->updateAlgemeen($array, $kenteken, 'voertuigen');
 
         //Assen updaten
-        if (array_key_exists('Assen', $array))//Als er een key 'brandstof' is meegestuurd, willen we blijkbaar de bradstof updaten. Als dit niet het geval is, hoeven we niks up te daten.
+        if (array_key_exists('Assen', $array))//Als er een key 'Assen' is meegestuurd, willen we blijkbaar de assen updaten. Als dit niet het geval is, hoeven we niks up te daten.
             $this->updateAlgemeen($array['Assen'], $kenteken, 'assen');
 
         //Brandstof updaten
-        if (array_key_exists('Brandstof', $array))//Als er een key 'brandstof' is meegestuurd, willen we blijkbaar de bradstof updaten. Als dit niet het geval is, hoeven we niks up te daten.
+        if (array_key_exists('Brandstof', $array))//Als er een key 'brandstof' is meegestuurd, willen we blijkbaar de brandstof updaten. Als dit niet het geval is, hoeven we niks up te daten.
             $this->updateAlgemeen($array['Brandstof'], $kenteken, 'brandstof');
     }
 
 
     public function updateAssenJson(Request $request, $kenteken)
     {
-    //Deze functie is nogal ingewikkeld, het is in feite een combi tussen 'maak' en 'delete'
-    $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
+    $json = $request->input();
 
-    $jsonArray = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
+    $jsonArray = json_decode(json_encode($json),true);
 
     $this->updateAlgemeen($jsonArray, $kenteken, 'assen');
     }
@@ -540,9 +537,8 @@ class voertuigenController extends Controller
 
     public function updateBrandstofJson(Request $request, $kenteken)
     {
-        //Deze functie is nogal ingewikkeld, het is in feite een combi tussen 'maak' en 'delete'
-        $json = $request->input();//Hier haal ik de json op die is meegegeven in de post
-        $jsonArray = json_decode(json_encode($json),true);//Als ik hem een keer decodeer werkt het niet. Ik moet hem encoden en dan weer terugdecoderen
+        $json = $request->input();
+        $jsonArray = json_decode(json_encode($json),true);
         $this->updateAlgemeen($jsonArray, $kenteken, 'brandstof');
     }
 
@@ -594,9 +590,10 @@ class voertuigenController extends Controller
 
     function array_to_xml($data, &$xml_data )
     {
+        //Deze functie heb ik op internet gevonden en zelf nog aangepast
         foreach($data as $key => $value )
         {
-            $key = str_replace(" ", "_", $key);
+            $key = str_replace(" ", "_", $key);//Xml houdt niet van spaties dus die vervang ik
             if (is_array($value) || strval($value))
             {
                 if( is_array($value))
@@ -618,6 +615,7 @@ class voertuigenController extends Controller
 
     function xml_to_array($input): array
     {
+        //Zet een xml om in een array
         $xml = simplexml_load_string($input, "SimpleXMLElement", LIBXML_NOCDATA);
         $json = json_encode($xml);
         $array = json_decode($json,TRUE);
