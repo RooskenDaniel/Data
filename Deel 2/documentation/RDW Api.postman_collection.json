@@ -1,0 +1,644 @@
+{
+	"info": {
+		"_postman_id": "53178118-3ea2-4e8f-96e3-9030e3da2976",
+		"name": "RDW Api",
+		"description": "Deze Api haalt gegeven op uit drie tabbellen over gekentekende voertuigen afkomstig uit het RDW.\n\nDe link bestaat telkens uit twee of drie delen. Het eerste deel is het formaat waarin je wilt communiseren. Dit kan 'xml' of 'json' zijn. Let op dat dit bij 'delete' niet get geval is.\n\nHet volgende deel van de link, gescheiden door '/', is de tabel. 'Voertuigen' werkt zowel met de algemene voetguigentabel, als met de speciefieke assen- en brandstoftabel. Wil je niet alle gegevens van een voertuig hebben? Dan gebruik je 'assen' of 'brandstof' dit haalt alleen data op van die speciefieke tabel.\n\nHet laatste optionele gedeelte is het kenteken. Bij een get mag je zelf weten of je deze invoert, als je het niet doet, krijg je alle voertuigen terug, als je het wel doet krijg je het voertuig met dat kenteken.\nBij post gebruik je het kenteken niet, in plaats daarvan geef je deze mee in je xml of json.\nBij delete gebruik je het kenteken wel.\nBij put gebruik je ook het kenteken, als je het kenteken wilt wijzigen, zet je het huidige kenteken in de link en het nieuwe kenteken in de json of xml.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Json Alle Voertuigen",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Get Json Alle Voertuigen",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Json Een Voertuig",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Get Json Een Voertuig",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/json/voertuigen/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"voertuigen",
+								"5"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Post Json Voertuig",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Post Json Voertuig",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Delete Voertuig",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Delete Voertuig",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Put Json Voertuig",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Put Json Voertuig",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Kenteken\": \"99aa99\",\r\n    \"Brandstof\": [\r\n        {\r\n            \"Brandstof volgnummer\": \"1\",\r\n            \"Brandstof omschrijving\": \"Benzine\",\r\n            \"Brandstofverbruik buiten de stad\": \"\",\r\n            \"Brandstofverbruik gecombineerd\": \"\",\r\n            \"Brandstofverbruik stad\": \"\",\r\n            \"CO2 uitstoot gecombineerd\": \"\",\r\n            \"Geluidsniveau rijdend\": \"66\",\r\n            \"Geluidsniveau stationair\": \"77\",\r\n            \"Emissieklasse\": \"\",\r\n            \"Milliueklasse EG Goedkeuring(licht)\": \"EU no 134/2014 as amended 2018/295\",\r\n            \"Milliueklasse EG Goedkeuring(zwaar)\": \"\",\r\n            \"Uitstoot deeltjes(licht)\": \"\",\r\n            \"Nettomaximumvermogen\": \"1.70\",\r\n            \"Roetuitstoot\": \"\",\r\n            \"Toerental geluidsniveau\": \"3250\"\r\n        }\r\n    ],\r\n    \"Assen\": {\r\n        \"315\": {\r\n            \"As nummer\": \"1\",\r\n            \"Aantal assen\": \"2\",\r\n            \"Aangedreven as\": \"\",\r\n            \"Hefas\": \"\",\r\n            \"Plaatscode as\": \"V\",\r\n            \"Spoorbreedte\": \"161\",\r\n            \"Weggedrag code\": \"\",\r\n            \"Wettelijk Toegestane maximum aslast\": \"1085\",\r\n            \"Technisch Toegestane maximum aslast\": \"1085\"\r\n        }\r\n    },\r\n    \"Voertuigsoort\": \"Personenauto\",\r\n    \"Merk\": \"FORD\",\r\n    \"Handelsbenaming\": \"S-MAX\",\r\n    \"Vervaldatum APK\": \"20210721\",\r\n    \"Datum tentaamstelling\": \"20090926\",\r\n    \"Bruto BPM\": \"15410\",\r\n    \"Inrichting\": \"MPV\",\r\n    \"Aantal zitplaatsen\": \"7\",\r\n    \"Eerste kleur\": \"GRIJS\",\r\n    \"Tweede kleur\": \"Niet geregistreerd\",\r\n    \"Aantal cilinders\": \"5\",\r\n    \"Cilinderinhoud\": \"2521\",\r\n    \"Massa ledig voertuig\": \"1581\",\r\n    \"Toegestane maximum massa voertuig\": \"2420\",\r\n    \"Massa rijklaar\": \"1681\",\r\n    \"Maximum massa trekken ongeremd\": \"750\",\r\n    \"Maximum massa trekken geremd\": \"1700\",\r\n    \"Zuinigheidslabel\": \"C\",\r\n    \"Datum eerste toelating\": \"20060731\",\r\n    \"Datum eerste afgifte Nederland\": \"20060731\",\r\n    \"Wacht op keuren\": \"Geen verstrekking in Open Data\",\r\n    \"Catalogusprijs\": \"\",\r\n    \"WAM verzekerd\": \"Ja\",\r\n    \"Maximale constuctiesnelheid (brom/snorfiets)\": \"\",\r\n    \"Laadvermogen\": \"\",\r\n    \"Oplegger geremd\": \"\",\r\n    \"Aanhanger autonoom geremd\": \"\",\r\n    \"Aanhanger middenas geremd\": \"\",\r\n    \"Vermogen (brom/snorfiets)\": \"\",\r\n    \"Aantal staanplaatsen\": \"\",\r\n    \"Aantal deuren\": \"4\",\r\n    \"Aantal wielen\": \"4\",\r\n    \"Afstand hart koppeling tot achterzijden voertuig\": \"0\",\r\n    \"Afstand voorzijde voertuig tot hart koppeling\": \"0\",\r\n    \"Afwijkende maximum snelheid\": \"\",\r\n    \"Lengte\": \"477\",\r\n    \"Breedte\": \"0\",\r\n    \"Europese voertuigcategorie\": \"M1\",\r\n    \"Europese voertuigcategorie toevoeging\": \"\",\r\n    \"Plaats chassisnummer\": \"op bodemplaat by r. voorzitting\",\r\n    \"Technische max. masse voertuig\": \"2420\",\r\n    \"Type\": \"\",\r\n    \"Type gasinstalatie\": \"\",\r\n    \"Typegoedkeuringnummer\": \"e13*2001/116*0185*00\",\r\n    \"Variant\": \"HUWA1S\",\r\n    \"Uitvoering\": \"7DHAQF\",\r\n    \"Volgnummer wijziging EU typegoedkeuring\": \"0\",\r\n    \"Vermogen massarijklaar\": \"0.1\",\r\n    \"Wielbasis\": \"285\",\r\n    \"Export indicator\": \"Nee\",\r\n    \"Openstaande terugroepactie indicator\": \"Ja\",\r\n    \"Valvaldatum tachograaf\": \"\",\r\n    \"Taxi indicator\": \"Nee\",\r\n    \"Maximum massa samenstelling\": \"4120\",\r\n    \"Aantal rolstoelplaatsen\": \"0\",\r\n    \"Maximum ondersteunde snelheid\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/json/voertuigen/99aa99",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"voertuigen",
+								"99aa99"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Json Alle Assen",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Get Json Alle Assen",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Json Een As",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Get Json Een As",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Post Json Assen",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Post Json Assen",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Delete Assen",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Delete Assen",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Put Json Assen",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Put Json Assen",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Json Alle Brandstof",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Get Json Alle Brandstof",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Json Een brandstof",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Get Json Een brandstof",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Post Json Branstof",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Post Json Branstof",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Delete Brandstof",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Delete Brandstof",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Put Brandstof",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Put Brandstof",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Xml Alle Voertuigen",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Get Xml Alle Voertuigen",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Xml Een voertuig",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Get Xml Een voertuig",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Post Xml Voertuig",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Post Xml Voertuig",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Put Xml voertuigen",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Put Xml voertuigen",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Xml Alle Assen",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Get Xml Alle Assen",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Xml Een As",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Get Xml Een As",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Post Xml Assen",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Post Xml Assen",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Put Xml Assen",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Put Xml Assen",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Xml Alle Brandstof",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Get Xml Alle Brandstof",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get Xml Een brandstof",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Get Xml Een brandstof",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Post Xml Brandstof",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Post Xml Brandstof",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Put Xml Brandstof",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "Put Xml Brandstof",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	]
+}
