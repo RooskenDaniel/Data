@@ -19,7 +19,18 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/json/voertuigen",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"voertuigen"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -42,7 +53,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/json/voertuigen/5",
+							"raw": "http://localhost:8000/json/voertuigen/20RKVK",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -51,7 +62,7 @@
 							"path": [
 								"json",
 								"voertuigen",
-								"5"
+								"20RKVK"
 							]
 						}
 					},
@@ -73,9 +84,36 @@
 				{
 					"name": "Post Json Voertuig",
 					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": null
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Kenteken\": \"99aa99\",\r\n    \"Brandstof\": [\r\n        {\r\n            \"Brandstof volgnummer\": \"1\",\r\n            \"Brandstof omschrijving\": \"Benzine\",\r\n            \"Brandstofverbruik buiten de stad\": \"\",\r\n            \"Brandstofverbruik gecombineerd\": \"\",\r\n            \"Brandstofverbruik stad\": \"\",\r\n            \"CO2 uitstoot gecombineerd\": \"\",\r\n            \"Geluidsniveau rijdend\": \"66\",\r\n            \"Geluidsniveau stationair\": \"77\",\r\n            \"Emissieklasse\": \"\",\r\n            \"Milliueklasse EG Goedkeuring(licht)\": \"EU no 134/2014 as amended 2018/295\",\r\n            \"Milliueklasse EG Goedkeuring(zwaar)\": \"\",\r\n            \"Uitstoot deeltjes(licht)\": \"\",\r\n            \"Nettomaximumvermogen\": \"1.70\",\r\n            \"Roetuitstoot\": \"\",\r\n            \"Toerental geluidsniveau\": \"3250\"\r\n        }\r\n    ],\r\n    \"Assen\": {\r\n        \"315\": {\r\n            \"As nummer\": \"1\",\r\n            \"Aantal assen\": \"2\",\r\n            \"Aangedreven as\": \"\",\r\n            \"Hefas\": \"\",\r\n            \"Plaatscode as\": \"V\",\r\n            \"Spoorbreedte\": \"161\",\r\n            \"Weggedrag code\": \"\",\r\n            \"Wettelijk Toegestane maximum aslast\": \"1085\",\r\n            \"Technisch Toegestane maximum aslast\": \"1085\"\r\n        }\r\n    },\r\n    \"Voertuigsoort\": \"Personenauto\",\r\n    \"Merk\": \"FORD\",\r\n    \"Handelsbenaming\": \"S-MAX\",\r\n    \"Vervaldatum APK\": \"20210721\",\r\n    \"Datum tentaamstelling\": \"20090926\",\r\n    \"Bruto BPM\": \"15410\",\r\n    \"Inrichting\": \"MPV\",\r\n    \"Aantal zitplaatsen\": \"7\",\r\n    \"Eerste kleur\": \"GRIJS\",\r\n    \"Tweede kleur\": \"Niet geregistreerd\",\r\n    \"Aantal cilinders\": \"5\",\r\n    \"Cilinderinhoud\": \"2521\",\r\n    \"Massa ledig voertuig\": \"1581\",\r\n    \"Toegestane maximum massa voertuig\": \"2420\",\r\n    \"Massa rijklaar\": \"1681\",\r\n    \"Maximum massa trekken ongeremd\": \"750\",\r\n    \"Maximum massa trekken geremd\": \"1700\",\r\n    \"Zuinigheidslabel\": \"C\",\r\n    \"Datum eerste toelating\": \"20060731\",\r\n    \"Datum eerste afgifte Nederland\": \"20060731\",\r\n    \"Wacht op keuren\": \"Geen verstrekking in Open Data\",\r\n    \"Catalogusprijs\": \"\",\r\n    \"WAM verzekerd\": \"Ja\",\r\n    \"Maximale constuctiesnelheid (brom/snorfiets)\": \"\",\r\n    \"Laadvermogen\": \"\",\r\n    \"Oplegger geremd\": \"\",\r\n    \"Aanhanger autonoom geremd\": \"\",\r\n    \"Aanhanger middenas geremd\": \"\",\r\n    \"Vermogen (brom/snorfiets)\": \"\",\r\n    \"Aantal staanplaatsen\": \"\",\r\n    \"Aantal deuren\": \"4\",\r\n    \"Aantal wielen\": \"4\",\r\n    \"Afstand hart koppeling tot achterzijden voertuig\": \"0\",\r\n    \"Afstand voorzijde voertuig tot hart koppeling\": \"0\",\r\n    \"Afwijkende maximum snelheid\": \"\",\r\n    \"Lengte\": \"477\",\r\n    \"Breedte\": \"0\",\r\n    \"Europese voertuigcategorie\": \"M1\",\r\n    \"Europese voertuigcategorie toevoeging\": \"\",\r\n    \"Plaats chassisnummer\": \"op bodemplaat by r. voorzitting\",\r\n    \"Technische max. masse voertuig\": \"2420\",\r\n    \"Type\": \"\",\r\n    \"Type gasinstalatie\": \"\",\r\n    \"Typegoedkeuringnummer\": \"e13*2001/116*0185*00\",\r\n    \"Variant\": \"HUWA1S\",\r\n    \"Uitvoering\": \"7DHAQF\",\r\n    \"Volgnummer wijziging EU typegoedkeuring\": \"0\",\r\n    \"Vermogen massarijklaar\": \"0.1\",\r\n    \"Wielbasis\": \"285\",\r\n    \"Export indicator\": \"Nee\",\r\n    \"Openstaande terugroepactie indicator\": \"Ja\",\r\n    \"Valvaldatum tachograaf\": \"\",\r\n    \"Taxi indicator\": \"Nee\",\r\n    \"Maximum massa samenstelling\": \"4120\",\r\n    \"Aantal rolstoelplaatsen\": \"0\",\r\n    \"Maximum ondersteunde snelheid\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/json/voertuigen",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"voertuigen"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -95,9 +133,21 @@
 				{
 					"name": "Delete Voertuig",
 					"originalRequest": {
-						"method": "GET",
+						"method": "DELETE",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/json/voertuigen/99aa99",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"voertuigen",
+								"99aa99"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -169,7 +219,18 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/json/assen",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"assen"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -191,7 +252,19 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/json/assen/99aa99",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"assen",
+								"99aa99"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -212,8 +285,36 @@
 					"name": "Post Json Assen",
 					"originalRequest": {
 						"method": "GET",
-						"header": [],
-						"url": null
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Kenteken\": \"99aa99\",\r\n    \"As nummer\": \"1\",\r\n    \"Aantal assen\": \"2\",\r\n    \"Aangedreven as\": \"\",\r\n    \"Hefas\": \"\",\r\n    \"Plaatscode as\": \"V\",\r\n    \"Spoorbreedte\": \"161\",\r\n    \"Weggedrag code\": \"\",\r\n    \"Wettelijk Toegestane maximum aslast\": \"1085\",\r\n    \"Technisch Toegestane maximum aslast\": \"1085\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/json/assen/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"assen",
+								""
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -233,9 +334,20 @@
 				{
 					"name": "Delete Assen",
 					"originalRequest": {
-						"method": "GET",
+						"method": "DELETE",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/assen/99aa99",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"assen",
+								"99aa99"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -255,9 +367,37 @@
 				{
 					"name": "Put Json Assen",
 					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": null
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Kenteken\": \"99aa99\",\r\n    \"As nummer\": \"1\",\r\n    \"Aantal assen\": \"2\",\r\n    \"Aangedreven as\": \"\",\r\n    \"Hefas\": \"\",\r\n    \"Plaatscode as\": \"V\",\r\n    \"Spoorbreedte\": \"161\",\r\n    \"Weggedrag code\": \"\",\r\n    \"Wettelijk Toegestane maximum aslast\": \"1085\",\r\n    \"Technisch Toegestane maximum aslast\": \"1085\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/json/assen/99aa99",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"assen",
+								"99aa99"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -279,7 +419,18 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/json/brandstof",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"brandstof"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -301,7 +452,19 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/json/brandstof/99aa99",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"brandstof",
+								"99aa99"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -322,8 +485,36 @@
 					"name": "Post Json Branstof",
 					"originalRequest": {
 						"method": "GET",
-						"header": [],
-						"url": null
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Kenteken\": \"99aa99\",\r\n    \"Brandstof volgnummer\": \"1\",\r\n    \"Brandstof omschrijving\": \"Benzine\",\r\n    \"Brandstofverbruik buiten de stad\": \"\",\r\n    \"Brandstofverbruik gecombineerd\": \"\",\r\n    \"Brandstofverbruik stad\": \"\",\r\n    \"CO2 uitstoot gecombineerd\": \"\",\r\n    \"Geluidsniveau rijdend\": \"66\",\r\n    \"Geluidsniveau stationair\": \"77\",\r\n    \"Emissieklasse\": \"\",\r\n    \"Milliueklasse EG Goedkeuring(licht)\": \"EU no 134/2014 as amended 2018/295\",\r\n    \"Milliueklasse EG Goedkeuring(zwaar)\": \"\",\r\n    \"Uitstoot deeltjes(licht)\": \"\",\r\n    \"Nettomaximumvermogen\": \"1.70\",\r\n    \"Roetuitstoot\": \"\",\r\n    \"Toerental geluidsniveau\": \"3250\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/json/brandstof/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"brandstof",
+								""
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -343,9 +534,20 @@
 				{
 					"name": "Delete Brandstof",
 					"originalRequest": {
-						"method": "GET",
+						"method": "DELETE",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/brandstof/99aa99",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"brandstof",
+								"99aa99"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -366,8 +568,36 @@
 					"name": "Put Brandstof",
 					"originalRequest": {
 						"method": "GET",
-						"header": [],
-						"url": null
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Kenteken\": \"99aa99\",\r\n    \"Brandstof volgnummer\": \"1\",\r\n    \"Brandstof omschrijving\": \"Benzine\",\r\n    \"Brandstofverbruik buiten de stad\": \"\",\r\n    \"Brandstofverbruik gecombineerd\": \"\",\r\n    \"Brandstofverbruik stad\": \"\",\r\n    \"CO2 uitstoot gecombineerd\": \"\",\r\n    \"Geluidsniveau rijdend\": \"66\",\r\n    \"Geluidsniveau stationair\": \"77\",\r\n    \"Emissieklasse\": \"\",\r\n    \"Milliueklasse EG Goedkeuring(licht)\": \"EU no 134/2014 as amended 2018/295\",\r\n    \"Milliueklasse EG Goedkeuring(zwaar)\": \"\",\r\n    \"Uitstoot deeltjes(licht)\": \"\",\r\n    \"Nettomaximumvermogen\": \"1.70\",\r\n    \"Roetuitstoot\": \"\",\r\n    \"Toerental geluidsniveau\": \"3250\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/json/brandstof/99aa99",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"json",
+								"brandstof",
+								"99aa99"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -389,7 +619,18 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/xml/voertuigen",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"xml",
+								"voertuigen"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -411,7 +652,19 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/xml/voertuigen/20RKVK",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"xml",
+								"voertuigen",
+								"20RKVK"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -431,9 +684,36 @@
 				{
 					"name": "Post Xml Voertuig",
 					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": null
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\"?>\r\n<root>\r\n\t<Kenteken>99aa99</Kenteken>\r\n\t<Brandstof>\r\n\t\t<item0>\r\n\t\t\t<Brandstof_volgnummer>1</Brandstof_volgnummer>\r\n\t\t\t<Brandstof_omschrijving>Benzine</Brandstof_omschrijving>\r\n\t\t\t<Geluidsniveau_rijdend>80</Geluidsniveau_rijdend>\r\n\t\t\t<Geluidsniveau_stationair>88</Geluidsniveau_stationair>\r\n\t\t\t<Nettomaximumvermogen>63.00</Nettomaximumvermogen>\r\n\t\t\t<Toerental_geluidsniveau>3750</Toerental_geluidsniveau>\r\n\t\t</item0>\r\n\t</Brandstof>\r\n\t<Assen>\r\n\t\t<item17>\r\n\t\t\t<As_nummer>2</As_nummer>\r\n\t\t\t<Aantal_assen>2</Aantal_assen>\r\n\t\t\t<Plaatscode_as>A</Plaatscode_as>\r\n\t\t\t<Spoorbreedte>156</Spoorbreedte>\r\n\t\t\t<Wettelijk_Toegestane_maximum_aslast>1050</Wettelijk_Toegestane_maximum_aslast>\r\n\t\t\t<Technisch_Toegestane_maximum_aslast>1050</Technisch_Toegestane_maximum_aslast>\r\n\t\t</item17>\r\n\t</Assen>\r\n\t<Voertuigsoort>Personenauto</Voertuigsoort>\r\n\t<Merk>JAGUAR CARS</Merk>\r\n\t<Handelsbenaming>JAGUAR S-TYPE 2.7D V6</Handelsbenaming>\r\n\t<Vervaldatum_APK>20200627</Vervaldatum_APK>\r\n\t<Datum_tentaamstelling>20100708</Datum_tentaamstelling>\r\n\t<Bruto_BPM>17517</Bruto_BPM>\r\n\t<Inrichting>sedan</Inrichting>\r\n\t<Aantal_zitplaatsen>5</Aantal_zitplaatsen>\r\n\t<Eerste_kleur>ZWART</Eerste_kleur>\r\n\t<Tweede_kleur>Niet geregistreerd</Tweede_kleur>\r\n\t<Aantal_cilinders>6</Aantal_cilinders>\r\n\t<Cilinderinhoud>2720</Cilinderinhoud>\r\n\t<Massa_ledig_voertuig>1634</Massa_ledig_voertuig>\r\n\t<Toegestane_maximum_massa_voertuig>2255</Toegestane_maximum_massa_voertuig>\r\n\t<Massa_rijklaar>1734</Massa_rijklaar>\r\n\t<Maximum_massa_trekken_ongeremd>750</Maximum_massa_trekken_ongeremd>\r\n\t<Maximum_massa_trekken_geremd>1850</Maximum_massa_trekken_geremd>\r\n\t<Zuinigheidslabel>E</Zuinigheidslabel>\r\n\t<Datum_eerste_toelating>20050526</Datum_eerste_toelating>\r\n\t<Datum_eerste_afgifte_Nederland>20050526</Datum_eerste_afgifte_Nederland>\r\n\t<Wacht_op_keuren>Geen verstrekking in Open Data</Wacht_op_keuren>\r\n\t<WAM_verzekerd>Nee</WAM_verzekerd>\r\n\t<Aantal_deuren>4</Aantal_deuren>\r\n\t<Aantal_wielen>4</Aantal_wielen>\r\n\t<Lengte>489</Lengte>\r\n\t<Europese_voertuigcategorie>M1</Europese_voertuigcategorie>\r\n\t<Plaats_chassisnummer>tegen r. randprofiel in kofferruimte</Plaats_chassisnummer>\r\n\t<Technische_max._masse_voertuig>2255</Technische_max._masse_voertuig>\r\n\t<Typegoedkeuringnummer>e11*98/14*0115*10</Typegoedkeuringnummer>\r\n\t<Variant>LAB2</Variant>\r\n\t<Uitvoering>5MMMM</Uitvoering>\r\n\t<Vermogen_massarijklaar>0.09</Vermogen_massarijklaar>\r\n\t<Wielbasis>291</Wielbasis>\r\n\t<Export_indicator>Nee</Export_indicator>\r\n\t<Openstaande_terugroepactie_indicator>Nee</Openstaande_terugroepactie_indicator>\r\n\t<Taxi_indicator>Nee</Taxi_indicator>\r\n\t<Maximum_massa_samenstelling>4105</Maximum_massa_samenstelling>\r\n</root>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/xml/voertuigen",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"xml",
+								"voertuigen"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -453,9 +733,37 @@
 				{
 					"name": "Put Xml voertuigen",
 					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": null
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\"?>\r\n<root>\r\n\t<Kenteken>99aa99</Kenteken>\r\n\t<Brandstof>\r\n\t\t<item0>\r\n\t\t\t<Brandstof_volgnummer>1</Brandstof_volgnummer>\r\n\t\t\t<Brandstof_omschrijving>Benzine</Brandstof_omschrijving>\r\n\t\t\t<Geluidsniveau_rijdend>80</Geluidsniveau_rijdend>\r\n\t\t\t<Geluidsniveau_stationair>88</Geluidsniveau_stationair>\r\n\t\t\t<Nettomaximumvermogen>63.00</Nettomaximumvermogen>\r\n\t\t\t<Toerental_geluidsniveau>3750</Toerental_geluidsniveau>\r\n\t\t</item0>\r\n\t</Brandstof>\r\n\t<Assen>\r\n\t\t<item17>\r\n\t\t\t<As_nummer>2</As_nummer>\r\n\t\t\t<Aantal_assen>2</Aantal_assen>\r\n\t\t\t<Plaatscode_as>A</Plaatscode_as>\r\n\t\t\t<Spoorbreedte>156</Spoorbreedte>\r\n\t\t\t<Wettelijk_Toegestane_maximum_aslast>1050</Wettelijk_Toegestane_maximum_aslast>\r\n\t\t\t<Technisch_Toegestane_maximum_aslast>1050</Technisch_Toegestane_maximum_aslast>\r\n\t\t</item17>\r\n\t</Assen>\r\n\t<Voertuigsoort>Personenauto</Voertuigsoort>\r\n\t<Merk>JAGUAR CARS</Merk>\r\n\t<Handelsbenaming>JAGUAR S-TYPE 2.7D V6</Handelsbenaming>\r\n\t<Vervaldatum_APK>20200627</Vervaldatum_APK>\r\n\t<Datum_tentaamstelling>20100708</Datum_tentaamstelling>\r\n\t<Bruto_BPM>17517</Bruto_BPM>\r\n\t<Inrichting>sedan</Inrichting>\r\n\t<Aantal_zitplaatsen>5</Aantal_zitplaatsen>\r\n\t<Eerste_kleur>ZWART</Eerste_kleur>\r\n\t<Tweede_kleur>Niet geregistreerd</Tweede_kleur>\r\n\t<Aantal_cilinders>6</Aantal_cilinders>\r\n\t<Cilinderinhoud>2720</Cilinderinhoud>\r\n\t<Massa_ledig_voertuig>1634</Massa_ledig_voertuig>\r\n\t<Toegestane_maximum_massa_voertuig>2255</Toegestane_maximum_massa_voertuig>\r\n\t<Massa_rijklaar>1734</Massa_rijklaar>\r\n\t<Maximum_massa_trekken_ongeremd>750</Maximum_massa_trekken_ongeremd>\r\n\t<Maximum_massa_trekken_geremd>1850</Maximum_massa_trekken_geremd>\r\n\t<Zuinigheidslabel>E</Zuinigheidslabel>\r\n\t<Datum_eerste_toelating>20050526</Datum_eerste_toelating>\r\n\t<Datum_eerste_afgifte_Nederland>20050526</Datum_eerste_afgifte_Nederland>\r\n\t<Wacht_op_keuren>Geen verstrekking in Open Data</Wacht_op_keuren>\r\n\t<WAM_verzekerd>Nee</WAM_verzekerd>\r\n\t<Aantal_deuren>4</Aantal_deuren>\r\n\t<Aantal_wielen>4</Aantal_wielen>\r\n\t<Lengte>489</Lengte>\r\n\t<Europese_voertuigcategorie>M1</Europese_voertuigcategorie>\r\n\t<Plaats_chassisnummer>tegen r. randprofiel in kofferruimte</Plaats_chassisnummer>\r\n\t<Technische_max._masse_voertuig>2255</Technische_max._masse_voertuig>\r\n\t<Typegoedkeuringnummer>e11*98/14*0115*10</Typegoedkeuringnummer>\r\n\t<Variant>LAB2</Variant>\r\n\t<Uitvoering>5MMMM</Uitvoering>\r\n\t<Vermogen_massarijklaar>0.09</Vermogen_massarijklaar>\r\n\t<Wielbasis>291</Wielbasis>\r\n\t<Export_indicator>Nee</Export_indicator>\r\n\t<Openstaande_terugroepactie_indicator>Nee</Openstaande_terugroepactie_indicator>\r\n\t<Taxi_indicator>Nee</Taxi_indicator>\r\n\t<Maximum_massa_samenstelling>4105</Maximum_massa_samenstelling>\r\n</root>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/xml/voertuigen/99aa99",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"xml",
+								"voertuigen",
+								"99aa99"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -477,7 +785,18 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/xml/assen",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"xml",
+								"assen"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -499,7 +818,19 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/xml/assen/20RKVK",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"xml",
+								"assen",
+								"20RKVK"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -519,9 +850,37 @@
 				{
 					"name": "Post Xml Assen",
 					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": null
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\"?>\r\n<root>\r\n\t<item17>\r\n\t\t<Kenteken>20RKVK</Kenteken>\r\n\t\t<As_nummer>2</As_nummer>\r\n\t\t<Aantal_assen>2</Aantal_assen>\r\n\t\t<Plaatscode_as>A</Plaatscode_as>\r\n\t\t<Spoorbreedte>156</Spoorbreedte>\r\n\t\t<Wettelijk_Toegestane_maximum_aslast>1050</Wettelijk_Toegestane_maximum_aslast>\r\n\t\t<Technisch_Toegestane_maximum_aslast>1050</Technisch_Toegestane_maximum_aslast>\r\n\t</item17>\r\n</root>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/xml/assen/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"xml",
+								"assen",
+								""
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -541,9 +900,37 @@
 				{
 					"name": "Put Xml Assen",
 					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": null
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\"?>\r\n<root>\r\n\t<item17>\r\n\t\t<Kenteken>20RKVK</Kenteken>\r\n\t\t<As_nummer>2</As_nummer>\r\n\t\t<Aantal_assen>2</Aantal_assen>\r\n\t\t<Plaatscode_as>A</Plaatscode_as>\r\n\t\t<Spoorbreedte>156</Spoorbreedte>\r\n\t\t<Wettelijk_Toegestane_maximum_aslast>1050</Wettelijk_Toegestane_maximum_aslast>\r\n\t\t<Technisch_Toegestane_maximum_aslast>1050</Technisch_Toegestane_maximum_aslast>\r\n\t</item17>\r\n</root>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/xml/assen/99aa99",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"xml",
+								"assen",
+								"99aa99"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -565,7 +952,18 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/xml/brandstof",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"xml",
+								"brandstof"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -587,7 +985,19 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "http://localhost:8000/xml/brandstof/20RKVK",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"xml",
+								"brandstof",
+								"20RKVK"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -607,9 +1017,36 @@
 				{
 					"name": "Post Xml Brandstof",
 					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": null
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\"?>\r\n<root>\r\n\t<item0>\r\n\t\t<Kenteken>20RKVK</Kenteken>\r\n\t\t<Brandstof_volgnummer>1</Brandstof_volgnummer>\r\n\t\t<Brandstof_omschrijving>Benzine</Brandstof_omschrijving>\r\n\t\t<Geluidsniveau_rijdend>80</Geluidsniveau_rijdend>\r\n\t\t<Geluidsniveau_stationair>88</Geluidsniveau_stationair>\r\n\t\t<Nettomaximumvermogen>63.00</Nettomaximumvermogen>\r\n\t\t<Toerental_geluidsniveau>3750</Toerental_geluidsniveau>\r\n\t</item0>\r\n</root>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/xml/brandstof",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"xml",
+								"brandstof"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,
@@ -629,9 +1066,37 @@
 				{
 					"name": "Put Xml Brandstof",
 					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": null
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\"?>\r\n<root>\r\n\t<item0>\r\n\t\t<Kenteken>20RKVK</Kenteken>\r\n\t\t<Brandstof_volgnummer>1</Brandstof_volgnummer>\r\n\t\t<Brandstof_omschrijving>Benzine</Brandstof_omschrijving>\r\n\t\t<Geluidsniveau_rijdend>80</Geluidsniveau_rijdend>\r\n\t\t<Geluidsniveau_stationair>88</Geluidsniveau_stationair>\r\n\t\t<Nettomaximumvermogen>63.00</Nettomaximumvermogen>\r\n\t\t<Toerental_geluidsniveau>3750</Toerental_geluidsniveau>\r\n\t</item0>\r\n</root>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/xml/brandstof/20RKVK",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"xml",
+								"brandstof",
+								"20RKVK"
+							]
+						}
 					},
 					"_postman_previewlanguage": null,
 					"header": null,

@@ -1,0 +1,52 @@
+*
+{
+    padding: 0px;
+    margin: 0px;
+}
+
+.header
+{
+    height: 200px;
+    width: 100%;
+    background-color: indigo;
+    float: left;
+}
+
+.balkje
+{
+    height: 800px;
+    background-color: darkmagenta;
+    width: 20%;
+    float: left;
+}
+
+.content
+{
+    background-color: violet;
+    width: 60%;
+    float: left;
+}
+
+.kenteken
+{
+    margin: 30px;
+    height: 40px;
+    width: 200px;
+    float: left;
+}
+
+.kentekenblauw
+{
+    height: 100%;
+    width: 30px;
+    background-color: blue;
+    float: left;
+}
+
+.kentekengeel
+{
+    height: 100%;
+    width: 170px;
+    background-color: yellow;
+    float: left;
+}

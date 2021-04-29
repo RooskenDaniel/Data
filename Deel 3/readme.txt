@@ -1,1 +1,0 @@
-Vanwege tijdsnood heb ik (nog) geen applicatie gemaakt. Toch heb ik dit project ingeleverd zodat ik in ieder geval feedback op de API kan krijgen.
